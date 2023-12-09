@@ -12,6 +12,7 @@ namespace ArcadeFighter
 
 	    public InputManager  InputManager;
 	    public CameraManager CameraManager;
+	    public UIManager     UIManager;
        
  #if UNITY_EDITOR
         private void OnValidate()
@@ -29,6 +30,7 @@ namespace ArcadeFighter
         private void Start()
         {
 	        InputManager.Initialized();
+	       // UIManager   .Initialized();
             //Title Menu
 				//->Start
 				//->Quit->ApplicationQuit

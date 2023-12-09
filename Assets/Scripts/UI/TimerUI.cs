@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace ArcadeFighter
 {
-    public class UIController : MonoBehaviour
+    public class TimerUI : MonoBehaviour
     {
-       
+      
     }
 }
