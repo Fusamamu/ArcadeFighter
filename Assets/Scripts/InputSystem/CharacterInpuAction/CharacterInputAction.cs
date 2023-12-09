@@ -21,7 +21,7 @@ namespace ArcadeFighter
 			TargetInputAction = _inputAction;
 			InputManager      = _inputManager;
             
-			TargetInputAction.Enable();
+			TargetInputAction.Disable();
 			TargetInputAction.performed += OnPressedInputHandler;
 			TargetInputAction.canceled  += OnReleasedInputHandler;
 

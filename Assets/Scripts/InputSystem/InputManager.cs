@@ -13,15 +13,19 @@ namespace ArcadeFighter
 
         public InputRecorder InputRecorder = new ();
 
+        private ApplicationStarter applicationStarter;
+
         public InputManager()
         {
          
         }
 
-        public void Initialized()
+        public void Initialized(ApplicationStarter _applicationStarter)
         {
+            applicationStarter = _applicationStarter;
+            
             PlayerInput = new PlayerInput();
-            PlayerInput.Enable();
+            PlayerInput.Disable();
         }
 
         public void UpdateAllInputControls()

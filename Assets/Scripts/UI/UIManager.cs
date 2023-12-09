@@ -5,38 +5,38 @@ using UnityEngine;
 
 namespace ArcadeFighter
 {
-    public class UIManager : MonoBehaviour
+    [Serializable]
+    public class UIManager : IDisposable
     {
+        public MainMenuUI  MainMenuUI;
+        public TimerUI     TimerUI;
+        public HealthBarUI HealthBarUI;
+        public GameOverUI  GameOverUI;
+        
         private Dictionary<Type, GameUI> UITable = new Dictionary<Type, GameUI>();
-
-        public void Initialized()
+        
+        public ApplicationStarter ApplicationStarter { get; private set; }
+        
+        public UIManager()
         {
-            var _allUIs = FindObjectsOfType<GameUI>();
+        }
 
-            foreach (var _ui in _allUIs)
-                Add(_ui);
+        public void Initialized(ApplicationStarter _applicationStarter)
+        {
+            ApplicationStarter = _applicationStarter;
+            
+            MainMenuUI.Initialized(this);
+            TimerUI   .Initialized(this);
+            GameOverUI.Initialized(this);
+            
+            MainMenuUI.StartGameButton.onClick.AddListener(() =>
+            {
+                ApplicationStarter.StateMachineManager.ChangeState<GameplayState>();
+            });
+
+            MainMenuUI.QuitGameButton.onClick.AddListener(Application.Quit);
         }
         
-        public T GetUI<T>() where T : GameUI
-        {
-            if (UITable.ContainsKey(typeof(T)))
-                return UITable[typeof(T)] as T;
-
-            return null;
-        }
-
-        public void Open<T>() where T : GameUI
-        {
-            var _ui = GetUI<T>();
-            _ui.Open();
-        }
-
-        public void Close<T>() where T : GameUI
-        {
-            var _ui = GetUI<T>();
-            _ui.Close();
-        }
-
         public void Add(GameUI _ui)
         {
             if (!UITable.ContainsKey(_ui.GetType()))
@@ -44,11 +44,11 @@ namespace ArcadeFighter
             else
                 UITable[_ui.GetType()] = _ui;
         }
-        
-        public void Remove(GameUI _ui)
+
+        public void Dispose()
         {
-            if (UITable.ContainsKey(_ui.GetType()))
-                UITable.Remove(_ui.GetType());
+            foreach (var _ui in UITable.Values)
+                _ui.Dispose();
         }
     }
 }
