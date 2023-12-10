@@ -39,12 +39,18 @@ namespace ArcadeFighter
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
+			if(!CanPress())
+				return;
+			
 			base.OnPressedInputHandler(_context);
 			TargetCharacter.MoveLeft(_context);
 		}
         
 		protected override void OnReleasedInputHandler(InputAction.CallbackContext _context)
 		{
+			if(!CanPress())
+				return;
+			
 			base.OnReleasedInputHandler(_context);
 			TargetCharacter.MoveLeft(_context);
 		}

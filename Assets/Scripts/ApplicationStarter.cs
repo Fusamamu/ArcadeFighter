@@ -5,25 +5,13 @@ using UnityEngine;
 
 namespace ArcadeFighter
 {
-	// UIManager   .Initialized();
-	//Title Menu
-	//->Start
-	//->Quit->ApplicationQuit
-				
-	//Player Select Menu
-	//Player | AI vs Player| AI
-	//StartGame
-				
-	//Gameplay
-	//PAUSE
-	//RESUME
-	//Return to menu
-					
-	//Game Over	
-	//Replay
-	//Retry
-	//Return to menu
-
+	[Serializable]
+	public class StageData
+	{
+		public Transform LeftWall;
+		public Transform RightWall;
+	}
+	
 	public class ApplicationStarter : MonoBehaviour
     {
 	    public int StartTimer = 60;
@@ -36,6 +24,8 @@ namespace ArcadeFighter
 	    public UIManager           UIManager;
 	    public StateMachineManager StateMachineManager;
 
+	    public StageData GameStageData;
+	    
 	    public static GameTime GameTime = new();
 	    
  #if UNITY_EDITOR
@@ -61,8 +51,14 @@ namespace ArcadeFighter
 	        LeftPlayer .Initialized();
 	        RightPlayer.Initialized();
 	        
-	        LeftPlayer .CharacterInputControl = InputManager.GetControl(LeftPlayer , LeftPlayer .Type);
-	        RightPlayer.CharacterInputControl = InputManager.GetControl(RightPlayer, RightPlayer.Type);
+	        LeftPlayer .GetOtherPlayer();
+	        RightPlayer.GetOtherPlayer();
+
+	        LeftPlayer .StageData = GameStageData;
+	        RightPlayer.StageData = GameStageData;
+	       
+	        InputManager.GetControl(LeftPlayer , LeftPlayer .Type);
+	        InputManager.GetControl(RightPlayer, RightPlayer.Type);
         }
 
         private void Update()
@@ -85,7 +81,8 @@ namespace ArcadeFighter
         private void OnDestroy()
         {
 	        GameTime = null;
-	        Character.AllCharacters.Clear();
+	        Character.AllCharacters[0] = null;
+	        Character.AllCharacters[1] = null;
         }
     }
 }

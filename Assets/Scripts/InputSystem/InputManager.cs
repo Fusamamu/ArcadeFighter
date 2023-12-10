@@ -58,7 +58,6 @@ namespace ArcadeFighter
                     _characterInputControl = new RightPlayerInputControl(this, _character);
                     break;
                 case PlayerType.AI:
-                    _characterInputControl = new LeftPlayerCharacterInputControl(this, _character);
                     break;
             }
 

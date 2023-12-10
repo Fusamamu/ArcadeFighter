@@ -11,15 +11,26 @@ namespace ArcadeFighter
         [field: SerializeField] public PlayerType     Type  { get; protected set; }
         [field: SerializeField] public CharacterState State { get; protected set; } = CharacterState.IDLE;
          
-        [field: SerializeField] public float Health    { get; private set; } = 100f;
-        [field: SerializeField] public float MoveSpeed { get; private set; } = 1f;
+        [field: SerializeField] public float Health      { get; private set; } = 100f;
+        [field: SerializeField] public float AttackRange { get; private set; } = 2;
+        [field: SerializeField] public float MoveSpeed   { get; private set; } = 1f;
 
-        [SerializeField] protected Transform TargetTransform;
-        [SerializeField] protected Animator  TargetAnimator;
+        public float RightSide => TargetTransform.position.x + TargetCollider.bounds.extents.x;
+        public float LeftSide  => TargetTransform.position.x - TargetCollider.bounds.extents.x;
 
-        public CharacterInputControl CharacterInputControl;
+        public Transform   TargetTransform;
+        public Animator    TargetAnimator;
+        public BoxCollider TargetCollider;
+        
+        public StageData StageData;
+        
+        protected Character otherPlayer;
+        
+        public static Character[] AllCharacters = new Character[2];
 
-        public static List<Character> AllCharacters = new ();
+        public bool IsActionProcess => processActionCoroutine != null;
+
+        protected Coroutine processActionCoroutine;
 
         [SerializeField] private Vector3 originStandPosition;
         
@@ -30,10 +41,22 @@ namespace ArcadeFighter
         
         public virtual void Initialized()
         {
-            if(!AllCharacters.Contains(this))
-                AllCharacters.Add(this);
+            switch (Type)
+            {
+                case PlayerType.PLAYER_ONE:
+                    AllCharacters[0] = this;
+                    break;
+                case PlayerType.PLAYER_TWO:
+                    AllCharacters[1] = this;
+                    break;
+            }
             
             originStandPosition = TargetTransform.position;
+        }
+
+        public void GetOtherPlayer()
+        {
+            otherPlayer = Type == PlayerType.PLAYER_ONE ? AllCharacters[1] : AllCharacters[0];
         }
 
         public virtual void Update()
@@ -43,6 +66,11 @@ namespace ArcadeFighter
         public void ResetPosition()
         {
             TargetTransform.position = originStandPosition;
+        }
+
+        public void ReduceHealth(float _value)
+        {
+            Health -= _value;
         }
         
         public virtual void MoveLeft(float _moveAmount)
@@ -77,9 +105,14 @@ namespace ArcadeFighter
         {
         }
         
+        public virtual void Jump(InputAction.CallbackContext? _context = null)
+        {
+        }
+        
         public void Dispose()
         {
-            AllCharacters.Clear();
+            AllCharacters[0] = null;
+            AllCharacters[1] = null;
         }
     }
 }

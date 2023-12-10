@@ -73,6 +73,15 @@ namespace ArcadeFighter
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""a6a16110-5435-4346-a1e6-a6c11b39caa5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -130,6 +139,17 @@ namespace ArcadeFighter
                     ""action"": ""Evade"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""524f052a-c525-46ea-b0bf-8ce89d9bbb3a"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -154,13 +174,49 @@ namespace ArcadeFighter
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""a695e08a-0634-4024-ac95-422d8fa5bb74"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block"",
+                    ""type"": ""Button"",
+                    ""id"": ""f46cf28d-9b5b-4d58-ba71-d6cb2327d783"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Evade"",
+                    ""type"": ""Button"",
+                    ""id"": ""361313a5-b024-4e94-b1c6-1a9fc3949ec8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""3cf99046-ce4b-4e37-a7ae-d65287b26607"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""da15e3b7-534d-4b07-9fd8-3e28874cfec8"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -171,11 +227,55 @@ namespace ArcadeFighter
                 {
                     ""name"": """",
                     ""id"": ""ee59f0b8-f957-40fa-b528-945422dd3288"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/semicolon"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d889b10-fa50-47e8-bce9-52cf3bb5de4b"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ab572bc-5c6e-4e3f-8d2a-5bf9ea8d5539"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6e6c6ef-0d48-4fae-b505-db72bc62e772"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Evade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ede7cc49-1d98-41a5-a9b7-eff13651b855"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -191,10 +291,15 @@ namespace ArcadeFighter
             m_LeftPlayer_Attack = m_LeftPlayer.FindAction("Attack", throwIfNotFound: true);
             m_LeftPlayer_Block = m_LeftPlayer.FindAction("Block", throwIfNotFound: true);
             m_LeftPlayer_Evade = m_LeftPlayer.FindAction("Evade", throwIfNotFound: true);
+            m_LeftPlayer_Jump = m_LeftPlayer.FindAction("Jump", throwIfNotFound: true);
             // RightPlayer
             m_RightPlayer = asset.FindActionMap("RightPlayer", throwIfNotFound: true);
             m_RightPlayer_MoveLeft = m_RightPlayer.FindAction("MoveLeft", throwIfNotFound: true);
             m_RightPlayer_MoveRight = m_RightPlayer.FindAction("MoveRight", throwIfNotFound: true);
+            m_RightPlayer_Attack = m_RightPlayer.FindAction("Attack", throwIfNotFound: true);
+            m_RightPlayer_Block = m_RightPlayer.FindAction("Block", throwIfNotFound: true);
+            m_RightPlayer_Evade = m_RightPlayer.FindAction("Evade", throwIfNotFound: true);
+            m_RightPlayer_Jump = m_RightPlayer.FindAction("Jump", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -261,6 +366,7 @@ namespace ArcadeFighter
         private readonly InputAction m_LeftPlayer_Attack;
         private readonly InputAction m_LeftPlayer_Block;
         private readonly InputAction m_LeftPlayer_Evade;
+        private readonly InputAction m_LeftPlayer_Jump;
         public struct LeftPlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -270,6 +376,7 @@ namespace ArcadeFighter
             public InputAction @Attack => m_Wrapper.m_LeftPlayer_Attack;
             public InputAction @Block => m_Wrapper.m_LeftPlayer_Block;
             public InputAction @Evade => m_Wrapper.m_LeftPlayer_Evade;
+            public InputAction @Jump => m_Wrapper.m_LeftPlayer_Jump;
             public InputActionMap Get() { return m_Wrapper.m_LeftPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -294,6 +401,9 @@ namespace ArcadeFighter
                 @Evade.started += instance.OnEvade;
                 @Evade.performed += instance.OnEvade;
                 @Evade.canceled += instance.OnEvade;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
 
             private void UnregisterCallbacks(ILeftPlayerActions instance)
@@ -313,6 +423,9 @@ namespace ArcadeFighter
                 @Evade.started -= instance.OnEvade;
                 @Evade.performed -= instance.OnEvade;
                 @Evade.canceled -= instance.OnEvade;
+                @Jump.started -= instance.OnJump;
+                @Jump.performed -= instance.OnJump;
+                @Jump.canceled -= instance.OnJump;
             }
 
             public void RemoveCallbacks(ILeftPlayerActions instance)
@@ -336,12 +449,20 @@ namespace ArcadeFighter
         private List<IRightPlayerActions> m_RightPlayerActionsCallbackInterfaces = new List<IRightPlayerActions>();
         private readonly InputAction m_RightPlayer_MoveLeft;
         private readonly InputAction m_RightPlayer_MoveRight;
+        private readonly InputAction m_RightPlayer_Attack;
+        private readonly InputAction m_RightPlayer_Block;
+        private readonly InputAction m_RightPlayer_Evade;
+        private readonly InputAction m_RightPlayer_Jump;
         public struct RightPlayerActions
         {
             private @PlayerInput m_Wrapper;
             public RightPlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @MoveLeft => m_Wrapper.m_RightPlayer_MoveLeft;
             public InputAction @MoveRight => m_Wrapper.m_RightPlayer_MoveRight;
+            public InputAction @Attack => m_Wrapper.m_RightPlayer_Attack;
+            public InputAction @Block => m_Wrapper.m_RightPlayer_Block;
+            public InputAction @Evade => m_Wrapper.m_RightPlayer_Evade;
+            public InputAction @Jump => m_Wrapper.m_RightPlayer_Jump;
             public InputActionMap Get() { return m_Wrapper.m_RightPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -357,6 +478,18 @@ namespace ArcadeFighter
                 @MoveRight.started += instance.OnMoveRight;
                 @MoveRight.performed += instance.OnMoveRight;
                 @MoveRight.canceled += instance.OnMoveRight;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @Block.started += instance.OnBlock;
+                @Block.performed += instance.OnBlock;
+                @Block.canceled += instance.OnBlock;
+                @Evade.started += instance.OnEvade;
+                @Evade.performed += instance.OnEvade;
+                @Evade.canceled += instance.OnEvade;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
 
             private void UnregisterCallbacks(IRightPlayerActions instance)
@@ -367,6 +500,18 @@ namespace ArcadeFighter
                 @MoveRight.started -= instance.OnMoveRight;
                 @MoveRight.performed -= instance.OnMoveRight;
                 @MoveRight.canceled -= instance.OnMoveRight;
+                @Attack.started -= instance.OnAttack;
+                @Attack.performed -= instance.OnAttack;
+                @Attack.canceled -= instance.OnAttack;
+                @Block.started -= instance.OnBlock;
+                @Block.performed -= instance.OnBlock;
+                @Block.canceled -= instance.OnBlock;
+                @Evade.started -= instance.OnEvade;
+                @Evade.performed -= instance.OnEvade;
+                @Evade.canceled -= instance.OnEvade;
+                @Jump.started -= instance.OnJump;
+                @Jump.performed -= instance.OnJump;
+                @Jump.canceled -= instance.OnJump;
             }
 
             public void RemoveCallbacks(IRightPlayerActions instance)
@@ -391,11 +536,16 @@ namespace ArcadeFighter
             void OnAttack(InputAction.CallbackContext context);
             void OnBlock(InputAction.CallbackContext context);
             void OnEvade(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
         public interface IRightPlayerActions
         {
             void OnMoveLeft(InputAction.CallbackContext context);
             void OnMoveRight(InputAction.CallbackContext context);
+            void OnAttack(InputAction.CallbackContext context);
+            void OnBlock(InputAction.CallbackContext context);
+            void OnEvade(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
     }
 }

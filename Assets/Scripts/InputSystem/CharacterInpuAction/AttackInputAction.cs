@@ -25,6 +25,9 @@ namespace ArcadeFighter
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
+			if(!CanPress())
+				return;
+			
 			base.OnPressedInputHandler(_context);
 			IsTriggerred = true;
 			TargetCharacter.Attack(_context);
@@ -32,6 +35,9 @@ namespace ArcadeFighter
         
 		protected override void OnReleasedInputHandler(InputAction.CallbackContext _context)
 		{
+			if(!CanPress())
+				return;
+			
 			base.OnReleasedInputHandler(_context);
 			IsTriggerred = false;
 		}

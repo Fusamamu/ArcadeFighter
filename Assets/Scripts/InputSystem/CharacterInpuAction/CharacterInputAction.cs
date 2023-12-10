@@ -47,14 +47,17 @@ namespace ArcadeFighter
 		{
 			IsPressed = true;
 			InputManager.InputRecorder.RecordInput(this);
-			Debug.Log(IsPressed);
 		}
         
 		protected virtual void OnReleasedInputHandler(InputAction.CallbackContext _context)
 		{
 			IsPressed = false;
 			InputManager.InputRecorder.RecordInput(this);
-			Debug.Log(IsPressed);
+		}
+
+		protected virtual bool CanPress()
+		{
+			return !TargetCharacter.IsActionProcess;
 		}
         
 		public void Dispose()
