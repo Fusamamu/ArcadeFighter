@@ -8,7 +8,8 @@ namespace ArcadeFighter
 {
     public class Character : MonoBehaviour, IDisposable
     {
-        [field: SerializeField] public PlayerType Type;
+        [field: SerializeField] public PlayerType     Type  { get; protected set; }
+        [field: SerializeField] public CharacterState State { get; protected set; } = CharacterState.IDLE;
          
         [field: SerializeField] public float Health    { get; private set; } = 100f;
         [field: SerializeField] public float MoveSpeed { get; private set; } = 1f;
@@ -65,6 +66,10 @@ namespace ArcadeFighter
         }
 
         public virtual void Block(InputAction.CallbackContext? _context = null)
+        {
+        }
+        
+        public virtual void UnBlock(InputAction.CallbackContext? _context = null)
         {
         }
 

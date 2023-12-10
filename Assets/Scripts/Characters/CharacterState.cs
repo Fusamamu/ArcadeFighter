@@ -6,6 +6,7 @@ namespace ArcadeFighter
 {
     public enum CharacterState
     {
+        IDLE,
         MOVING, 
         ATTACKING,
         BLOCKING, 

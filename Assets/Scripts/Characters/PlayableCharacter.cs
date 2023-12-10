@@ -12,6 +12,7 @@ namespace ArcadeFighter
         private static readonly int walkForwardProperty  = Animator.StringToHash("Walk Forward");
         private static readonly int walkBackwardProperty = Animator.StringToHash("Walk Backward");
         private static readonly int punchProperty        = Animator.StringToHash("PunchTrigger");
+        private static readonly int guardProperty        = Animator.StringToHash("Guard");
 
         public override void MoveLeft(float _moveAmount)
         {
@@ -52,6 +53,14 @@ namespace ArcadeFighter
 
         public override void Block(InputAction.CallbackContext? _context = null)
         {
+            if(!TargetAnimator.GetBool(guardProperty))
+                TargetAnimator.SetBool(guardProperty, true);
+        }
+        
+        public override void UnBlock(InputAction.CallbackContext? _context = null)
+        {
+            if(TargetAnimator.GetBool(guardProperty))
+                TargetAnimator.SetBool(guardProperty, false);
         }
 
         public override void Evade(InputAction.CallbackContext? _context = null)
