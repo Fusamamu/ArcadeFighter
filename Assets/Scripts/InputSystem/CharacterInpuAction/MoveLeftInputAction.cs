@@ -1,10 +1,11 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ArcadeFighter
 {
 	public class MoveLeftInputAction : CharacterInputAction
 	{
-		private float moveLeftValue;
+		private float moveLeftValue = 1;
         
 		public MoveLeftInputAction
 		(
@@ -17,8 +18,23 @@ namespace ArcadeFighter
         
 		public override void Update()
 		{
-			moveLeftValue = TargetInputAction.ReadValue<float>();
-			TargetCharacter.MoveLeft (moveLeftValue);
+			if (!IsPressed)
+			{
+				RunReleasedActionCommand();
+				return;
+			}
+
+			RunPressedActionCommand();
+		}
+		
+		public override void RunPressedActionCommand()
+		{
+			TargetCharacter.MoveLeft(moveLeftValue);
+		}
+		
+		public override void RunReleasedActionCommand()
+		{
+			TargetCharacter.MoveLeft(0);
 		}
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)

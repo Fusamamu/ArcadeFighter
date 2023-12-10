@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 namespace ArcadeFighter
 {
@@ -32,17 +33,29 @@ namespace ArcadeFighter
 		{
             
 		}
+
+		public virtual void RunPressedActionCommand()
+		{
+			
+		}
+
+		public virtual void RunReleasedActionCommand()
+		{
+			
+		}
         
 		protected virtual void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
 			IsPressed = true;
 			InputManager.InputRecorder.RecordInput(this);
+			Debug.Log(IsPressed);
 		}
         
 		protected virtual void OnReleasedInputHandler(InputAction.CallbackContext _context)
 		{
 			IsPressed = false;
 			InputManager.InputRecorder.RecordInput(this);
+			Debug.Log(IsPressed);
 		}
         
 		public void Dispose()

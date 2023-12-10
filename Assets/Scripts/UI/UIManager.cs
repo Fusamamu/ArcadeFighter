@@ -13,7 +13,7 @@ namespace ArcadeFighter
         public HealthBarUI HealthBarUI;
         public GameOverUI  GameOverUI;
         
-        private Dictionary<Type, GameUI> UITable = new Dictionary<Type, GameUI>();
+        private Dictionary<Type, GameUI> UITable = new ();
         
         public ApplicationStarter ApplicationStarter { get; private set; }
         
@@ -29,12 +29,14 @@ namespace ArcadeFighter
             TimerUI   .Initialized(this);
             GameOverUI.Initialized(this);
             
-            MainMenuUI.StartGameButton.onClick.AddListener(() =>
-            {
-                ApplicationStarter.StateMachineManager.ChangeState<GameplayState>();
-            });
-
-            MainMenuUI.QuitGameButton.onClick.AddListener(Application.Quit);
+            TimerUI.OnTimeUpEvent.AddListener(() => ApplicationStarter.StateMachineManager.ChangeState<GameOverState>());
+            
+            MainMenuUI.StartGameButton.onClick.AddListener(() => ApplicationStarter.StateMachineManager.ChangeState<GameplayState>());
+            MainMenuUI.QuitGameButton .onClick.AddListener(Application.Quit);
+            
+            GameOverUI.PlayAgainButton       .onClick.AddListener(() => ApplicationStarter.StateMachineManager.ChangeState<GameplayState>());
+            GameOverUI.ReplayButton          .onClick.AddListener(() => ApplicationStarter.StateMachineManager.ChangeState<ReplayState>());
+            GameOverUI.ReturnToMainMenuButton.onClick.AddListener(() => ApplicationStarter.StateMachineManager.ChangeState<MainMenuState>());
         }
         
         public void Add(GameUI _ui)

@@ -4,7 +4,7 @@ namespace ArcadeFighter
 {
 	public class MoveRightInputAction : CharacterInputAction
 	{
-		private float moveRightValue;
+		private float moveRightValue = 1f;
         
 		public MoveRightInputAction
 		(
@@ -17,8 +17,23 @@ namespace ArcadeFighter
         
 		public override void Update()
 		{
-			moveRightValue = TargetInputAction.ReadValue<float>();
-			TargetCharacter.MoveRight (moveRightValue);
+			if (!IsPressed)
+			{
+				RunReleasedActionCommand();
+				return;
+			}
+
+			RunPressedActionCommand();
+		}
+		
+		public override void RunPressedActionCommand()
+		{
+			TargetCharacter.MoveRight(moveRightValue);
+		}
+		
+		public override void RunReleasedActionCommand()
+		{
+			TargetCharacter.MoveRight(0);
 		}
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)

@@ -23,8 +23,8 @@ namespace ArcadeFighter
 	//Replay
 	//Retry
 	//Return to menu
-	
-    public class ApplicationStarter : MonoBehaviour
+
+	public class ApplicationStarter : MonoBehaviour
     {
 	    public int StartTimer = 60;
 	    
@@ -35,7 +35,9 @@ namespace ArcadeFighter
 	    public CameraManager       CameraManager;
 	    public UIManager           UIManager;
 	    public StateMachineManager StateMachineManager;
-       
+
+	    public static GameTime GameTime = new();
+	    
  #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -50,25 +52,40 @@ namespace ArcadeFighter
 	        InputManager       .Initialized(this);
 	        UIManager          .Initialized(this);
 	        StateMachineManager.Initialized(this);
+	        
+	        GameTime.ResetTime();
         }
 
         private void Start()
         {
+	        LeftPlayer .Initialized();
+	        RightPlayer.Initialized();
+	        
 	        LeftPlayer .CharacterInputControl = InputManager.GetControl(LeftPlayer , LeftPlayer .Type);
 	        RightPlayer.CharacterInputControl = InputManager.GetControl(RightPlayer, RightPlayer.Type);
-
-	        UIManager.TimerUI.OnTimeUp += () =>
-	        {
-				UIManager.GameOverUI.Open();
-	        };
         }
 
         private void Update()
         {
-	        InputManager.UpdateAllInputControls();
+	        GameTime.Update();
+	        
+	        InputManager       .Update();
+	        StateMachineManager.Update();
 	        
 	        foreach (var _character in Character.AllCharacters)
 		        _character.Update();
+        }
+
+        public void Reset()
+        {
+	        foreach (var _character in Character.AllCharacters)
+		        _character.ResetPosition();
+        }
+
+        private void OnDestroy()
+        {
+	        GameTime = null;
+	        Character.AllCharacters.Clear();
         }
     }
 }

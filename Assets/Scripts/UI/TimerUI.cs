@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ArcadeFighter
 {
@@ -12,19 +13,23 @@ namespace ArcadeFighter
 
         private int timer;
         private Coroutine countDownCoroutine;
-        
-        public event Action OnTimeUp = delegate { };
+
+        public UnityEvent OnTimeUpEvent;
 
         public override void Initialized(UIManager _uiManager)
         {
             base.Initialized(_uiManager);
+        }
 
-            //OnTimeUp += application.StopPlay;
+        public void SetDefaultTimer()
+        {
+            SetTimer(application.StartTimer);
         }
 
         public void SetTimer(int _value)
         {
             timer = _value;
+            CountDownText.SetText(timer.ToString("00"));
         }
         
         public void StartCountDown()
@@ -51,12 +56,12 @@ namespace ArcadeFighter
                 CountDownText.SetText(timer.ToString("00"));
             }
 
-            OnTimeUp?.Invoke();
+            OnTimeUpEvent?.Invoke();
         }
         
         public override void Dispose()
         {
-            //OnTimeUp -= application.StopPlay;
+            OnTimeUpEvent.RemoveAllListeners();
         }
     }
 }

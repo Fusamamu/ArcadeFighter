@@ -18,7 +18,9 @@ namespace ArcadeFighter
 
         public CharacterInputControl CharacterInputControl;
 
-        public static List<Character> AllCharacters = new List<Character>();
+        public static List<Character> AllCharacters = new ();
+
+        private Vector3 originStandPosition;
         
         public Character()
         {
@@ -27,11 +29,19 @@ namespace ArcadeFighter
         
         public virtual void Initialized()
         {
-            AllCharacters.Add(this);
+            if(!AllCharacters.Contains(this))
+                AllCharacters.Add(this);
+            
+            originStandPosition = TargetTransform.position;
         }
 
         public virtual void Update()
         {
+        }
+
+        public void ResetPosition()
+        {
+            TargetTransform.position = originStandPosition;
         }
         
         public virtual void MoveLeft(float _moveAmount)

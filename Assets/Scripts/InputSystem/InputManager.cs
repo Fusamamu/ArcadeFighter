@@ -15,10 +15,15 @@ namespace ArcadeFighter
 
         private ApplicationStarter applicationStarter;
 
+        private bool isUpdateInputControl;
+
         public InputManager()
         {
          
         }
+
+        public void StartUpdateInputControl() => isUpdateInputControl = true;
+        public void StopUpdateInputControl () => isUpdateInputControl = false;
 
         public void Initialized(ApplicationStarter _applicationStarter)
         {
@@ -28,8 +33,11 @@ namespace ArcadeFighter
             PlayerInput.Disable();
         }
 
-        public void UpdateAllInputControls()
+        public void Update()
         {
+            if(!isUpdateInputControl)
+                return;
+            
             foreach (var _inputControl in inputControlTable.Values)
                 _inputControl.Update();
         }
