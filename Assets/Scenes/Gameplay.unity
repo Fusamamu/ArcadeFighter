@@ -1381,7 +1381,7 @@ GameObject:
   - component: {fileID: 509408840}
   - component: {fileID: 509408841}
   m_Layer: 0
-  m_Name: Heavy
+  m_Name: PlayerTwo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2245,9 +2245,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   <Health>k__BackingField: 100
-  <MoveSpeed>k__BackingField: 1
+  <MoveSpeed>k__BackingField: 1.5
   TargetTransform: {fileID: 509408840}
   TargetAnimator: {fileID: 516561320}
+  originStandPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &509408842
 Transform:
   m_ObjectHideFlags: 0
@@ -5264,7 +5265,7 @@ GameObject:
   - component: {fileID: 721057180}
   - component: {fileID: 721283517}
   m_Layer: 0
-  m_Name: Male
+  m_Name: PlayerOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5284,9 +5285,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   <Health>k__BackingField: 100
-  <MoveSpeed>k__BackingField: 1
+  <MoveSpeed>k__BackingField: 3
   TargetTransform: {fileID: 721057180}
   TargetAnimator: {fileID: 711760508}
+  originStandPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &721283518
 GameObject:
   m_ObjectHideFlags: 0
@@ -7552,12 +7554,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6498c0d9ca34e1db0e468c5e7ee2a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTimer: 5
+  StartTimer: 20
   LeftPlayer: {fileID: 721283517}
   RightPlayer: {fileID: 509408841}
   InputManager:
     InputRecorder:
-      AllRecordedInputs: []
+      currentRecordIndex: 0
+      currentInputRecordData:
+        TimeStamp: 0
+        IsPressed: 0
+        IsTriggerred: 0
+        InputActionName: 
+        Character: {fileID: 0}
   UIManager:
     MainMenuUI:
       UIParent: {fileID: 2133710264}
@@ -7568,6 +7576,9 @@ MonoBehaviour:
     TimerUI:
       UIParent: {fileID: 1605315736}
       CountDownText: {fileID: 568962712}
+      OnTimeUpEvent:
+        m_PersistentCalls:
+          m_Calls: []
     HealthBarUI:
       UIParent: {fileID: 2133710264}
     GameOverUI:
@@ -8080,5 +8091,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 109927888}
-  - {fileID: 1799477327}
   - {fileID: 726766036}
+  - {fileID: 1799477327}

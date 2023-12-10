@@ -7,6 +7,7 @@ namespace ArcadeFighter
 	{
 		public float TimeStamp;
 		public bool IsPressed;
+		public bool IsTriggerred;
 		public string InputActionName;
 		
 		public Character Character;
@@ -23,6 +24,7 @@ namespace ArcadeFighter
 			InputAction     = _characterInputAction.TargetInputAction;
 			InputActionName = _characterInputAction.InputActionName;
 			IsPressed       = _characterInputAction.IsPressed;
+			IsTriggerred    = _characterInputAction.IsTriggerred;
 		}
 
 		public void RunRecord()

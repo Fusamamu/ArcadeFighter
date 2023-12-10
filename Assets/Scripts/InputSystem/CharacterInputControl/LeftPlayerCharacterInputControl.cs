@@ -10,6 +10,7 @@ namespace ArcadeFighter
         {
             AddCharacterInputAction<MoveLeftInputAction> (_inputManager.PlayerInput.LeftPlayer.MoveLeft);
             AddCharacterInputAction<MoveRightInputAction>(_inputManager.PlayerInput.LeftPlayer.MoveRight);
+            AddCharacterInputAction<AttackInputAction>   (_inputManager.PlayerInput.LeftPlayer.Attack);
         }
     }
 }

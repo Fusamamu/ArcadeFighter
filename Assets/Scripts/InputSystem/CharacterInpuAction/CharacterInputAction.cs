@@ -1,20 +1,19 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 namespace ArcadeFighter
 {
 	public class CharacterInputAction : IDisposable
 	{
-		public bool IsPressed { get; private set; }
+		public bool IsPressed    { get; protected set; }
+		public bool IsTriggerred { get; protected set; }
         
 		public readonly Character    TargetCharacter;
 		public readonly InputAction  TargetInputAction;
 		public readonly InputManager InputManager;
 
 		public readonly string InputActionName;
-
-		public static List<CharacterInputAction> CharacterInputActions = new List<CharacterInputAction>();
 
 		public CharacterInputAction(Character _character, InputAction _inputAction, InputManager _inputManager)
 		{

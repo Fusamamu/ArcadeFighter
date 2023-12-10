@@ -1226,7 +1226,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.46874997
   m_TransitionOffset: 0
-  m_ExitTime: 0.95
+  m_ExitTime: 0.35
   m_HasExitTime: 1
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
@@ -2931,7 +2931,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Punch
-  m_Speed: 1
+  m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 110168856}
@@ -3117,13 +3117,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 110207305}
-    m_Position: {x: -60, y: 132, z: 0}
+    m_Position: {x: -60, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110219304}
-    m_Position: {x: -300, y: 156, z: 0}
+    m_Position: {x: -300, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110248825}
-    m_Position: {x: -300, y: 108, z: 0}
+    m_Position: {x: -300, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110281788}
     m_Position: {x: 168, y: 132, z: 0}

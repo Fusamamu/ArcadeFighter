@@ -14,6 +14,8 @@ namespace ArcadeFighter
         [SerializeField] private InputRecordData currentInputRecordData;
 
         private bool isUpdateReplay;
+
+        private bool hasAlreadyTriggerred;
         
         public void RecordInput(CharacterInputAction _characterInputAction)
         {
@@ -66,7 +68,6 @@ namespace ArcadeFighter
 
             if (!TryGetNextRecordData(currentRecordIndex, out var _nextRecordData))
             {
-                //Temp
                 if(!currentInputRecordData.IsPressed)
                     currentInputRecordData.CharacterInputAction.RunReleasedActionCommand();
                 StopReplay();
@@ -75,13 +76,25 @@ namespace ArcadeFighter
 
             if (_elapsedTime < _nextRecordData.TimeStamp)
             {
-                if (currentInputRecordData.IsPressed)
-                    currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
+                if (!currentInputRecordData.IsTriggerred)
+                {
+                    if (currentInputRecordData.IsPressed)
+                        currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
+                    else
+                        currentInputRecordData.CharacterInputAction.RunReleasedActionCommand();
+                }
                 else
-                    currentInputRecordData.CharacterInputAction.RunReleasedActionCommand();
+                {
+                    hasAlreadyTriggerred = true;
+                    if(hasAlreadyTriggerred)
+                        return;
+                    
+                    currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
+                }
             }
             else
             {
+                hasAlreadyTriggerred = false;
                 currentInputRecordData = _nextRecordData;
                 currentRecordIndex++;
             }

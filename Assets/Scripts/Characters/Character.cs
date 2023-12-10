@@ -20,7 +20,7 @@ namespace ArcadeFighter
 
         public static List<Character> AllCharacters = new ();
 
-        private Vector3 originStandPosition;
+        [SerializeField] private Vector3 originStandPosition;
         
         public Character()
         {
@@ -52,23 +52,23 @@ namespace ArcadeFighter
         {
         }
 
-        public virtual void MoveLeft(InputAction.CallbackContext _context)
+        public virtual void MoveLeft(InputAction.CallbackContext? _context = null)
         {
         }
 
-        public virtual void MoveRight(InputAction.CallbackContext _context)
+        public virtual void MoveRight(InputAction.CallbackContext? _context = null)
         {
         }
 
-        public virtual void Attack(InputAction.CallbackContext _context)
+        public virtual void Attack(InputAction.CallbackContext? _context = null)
         {
         }
 
-        public virtual void Block(InputAction.CallbackContext _context)
+        public virtual void Block(InputAction.CallbackContext? _context = null)
         {
         }
 
-        public virtual void Evade(InputAction.CallbackContext _context)
+        public virtual void Evade(InputAction.CallbackContext? _context = null)
         {
         }
         

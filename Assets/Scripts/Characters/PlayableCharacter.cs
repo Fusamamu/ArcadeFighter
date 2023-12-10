@@ -11,7 +11,8 @@ namespace ArcadeFighter
     {
         private static readonly int walkForwardProperty  = Animator.StringToHash("Walk Forward");
         private static readonly int walkBackwardProperty = Animator.StringToHash("Walk Backward");
-        
+        private static readonly int punchProperty        = Animator.StringToHash("PunchTrigger");
+
         public override void MoveLeft(float _moveAmount)
         {
             if (_moveAmount < 0.02f)
@@ -35,23 +36,25 @@ namespace ArcadeFighter
             TargetTransform.Translate(_moveAmount * Vector3.forward * MoveSpeed * Time.deltaTime);
         }
         
-        public override void MoveLeft(InputAction.CallbackContext _context)
+        public override void MoveLeft(InputAction.CallbackContext? _context = null)
         {
         }
 
-        public override void MoveRight(InputAction.CallbackContext _context)
+        public override void MoveRight(InputAction.CallbackContext? _context = null)
         {
         }
 
-        public override void Attack(InputAction.CallbackContext _context)
+        public override void Attack(InputAction.CallbackContext? _context = null)
+        {
+            TargetAnimator.ResetTrigger(punchProperty);
+            TargetAnimator.SetTrigger(punchProperty);
+        }
+
+        public override void Block(InputAction.CallbackContext? _context = null)
         {
         }
 
-        public override void Block(InputAction.CallbackContext _context)
-        {
-        }
-
-        public override void Evade(InputAction.CallbackContext _context)
+        public override void Evade(InputAction.CallbackContext? _context = null)
         {
         }
     }
