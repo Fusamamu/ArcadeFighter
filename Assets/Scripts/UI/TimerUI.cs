@@ -9,6 +9,7 @@ namespace ArcadeFighter
     [Serializable]
     public class TimerUI : GameUI
     {
+        public float AnimationInterval = 0.02f;
         public TextMeshProUGUI CountDownText;
 
         private int timer;
@@ -19,6 +20,27 @@ namespace ArcadeFighter
         public override void Initialized(UIManager _uiManager)
         {
             base.Initialized(_uiManager);
+        }
+
+        public Coroutine StartSetDefaultTimer()
+        {
+            return application.StartCoroutine(SetDefaultTimerCoroutine());
+        }
+
+        public IEnumerator SetDefaultTimerCoroutine()
+        {
+            SetTimer(0);
+
+            int _timer = 0;
+            
+            while (_timer < application.StartTimer)
+            {
+                _timer++;
+                SetTimer(_timer);
+                yield return new WaitForSeconds(AnimationInterval);
+            }
+            
+            SetDefaultTimer();
         }
 
         public void SetDefaultTimer()

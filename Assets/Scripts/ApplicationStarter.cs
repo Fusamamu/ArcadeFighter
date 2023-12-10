@@ -40,6 +40,7 @@ namespace ArcadeFighter
 	        StateMachineManager = new StateMachineManager();
 	        
 	        InputManager       .Initialized(this);
+	        CameraManager      .Initialized(this);
 	        UIManager          .Initialized(this);
 	        StateMachineManager.Initialized(this);
 	        

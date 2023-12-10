@@ -8,6 +8,8 @@ namespace ArcadeFighter
 {
     public class Character : MonoBehaviour, IDisposable
     {
+        public bool StandingLeftSide => TargetTransform.position.x < otherPlayer.TargetTransform.position.x;
+        
         [field: SerializeField] public PlayerType     Type  { get; protected set; }
         [field: SerializeField] public CharacterState State { get; protected set; } = CharacterState.IDLE;
          
@@ -29,7 +31,6 @@ namespace ArcadeFighter
         public static Character[] AllCharacters = new Character[2];
 
         public bool IsActionProcess => processActionCoroutine != null;
-
         protected Coroutine processActionCoroutine;
 
         [SerializeField] private Vector3 originStandPosition;

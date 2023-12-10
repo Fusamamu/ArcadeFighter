@@ -8,6 +8,29 @@ namespace ArcadeFighter
     [Serializable]
     public class HealthBarUI : GameUI
     {
-     
+        public RectTransform BarRectTransform;
+
+        public Coroutine StartAnimateHealthBarToMax()
+        {
+            return application.StartCoroutine(AnimateHealthBarToMaxCoroutine());
+        }
+
+        public IEnumerator AnimateHealthBarToMaxCoroutine(Action _onComplete = null)
+        {
+            BarRectTransform.localScale = new Vector3(0, 1, 1);
+
+            float _v = 0;
+
+            while (_v < 1f)
+            {
+                _v += Time.deltaTime;
+                BarRectTransform.localScale = new Vector3(_v, 1, 1);
+                yield return null;
+            }
+            
+            BarRectTransform.localScale = new Vector3(1, 1, 1);
+            
+            _onComplete?.Invoke();
+        }
     }
 }

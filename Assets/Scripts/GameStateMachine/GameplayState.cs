@@ -12,20 +12,35 @@ namespace ArcadeFighter
         
         public override void OnEnter()
         {
-            ApplicationStarter
-                .GameTime
-                .ResetTime()
-                .StartUpdate();
-            
             application.Reset();
+            application.InputManager.InputRecorder.ClearInputRecord();
+
+            application.StartCoroutine(OnEnterCoroutine());
+        }
+
+        private IEnumerator OnEnterCoroutine()
+        {
+            var _healthAnimationP0  = application.UIManager.HealthBarUI_PlayerOne.StartAnimateHealthBarToMax();
+            var _healthAnimationP1  = application.UIManager.HealthBarUI_PlayerTwo.StartAnimateHealthBarToMax();
+            var _timerAnimation     = application.UIManager.TimerUI.StartSetDefaultTimer();
+            var _introTextAnimation = application.UIManager.TransitionUI.StartAnimateIntroText();
+            var _introZoomAnimation = application.CameraManager.StartZoomIntro();
             
-            application.UIManager.TimerUI.SetDefaultTimer();
+            yield return _healthAnimationP0;
+            yield return _healthAnimationP1;
+            yield return _timerAnimation;
+            yield return _introTextAnimation;
+            yield return _introZoomAnimation;
+            
             application.UIManager.TimerUI.StartCountDown();
             
             application.InputManager.StartUpdateInputControl();
             application.InputManager.PlayerInput.Enable();
             
-            application.InputManager.InputRecorder.ClearInputRecord();
+            ApplicationStarter
+                .GameTime
+                .ResetTime()
+                .StartUpdate();
         }
 
         public override void OnExit()

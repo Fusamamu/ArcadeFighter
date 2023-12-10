@@ -24,15 +24,18 @@ namespace ArcadeFighter
                 TargetAnimator.SetBool(walkForwardProperty, false);
                 return;
             }
-            
-            if (LeftSide > otherPlayer.RightSide)
-                return;
+           
+            if(!StandingLeftSide)
+                if (LeftSide < otherPlayer.RightSide)
+                    return;
             
             if (TargetTransform.position.x < StageData.LeftWall.position.x)
                 return;
+
+            int _direction = StandingLeftSide ? 1 : -1;
                 
             TargetAnimator.SetBool(walkForwardProperty, true);
-            TargetTransform.Translate(_moveAmount * Vector3.back * MoveSpeed * Time.deltaTime);
+            TargetTransform.Translate(_direction *_moveAmount * Vector3.back * MoveSpeed * Time.deltaTime);
         }
         
         public override void MoveRight(float _moveAmount)
@@ -42,14 +45,18 @@ namespace ArcadeFighter
                 TargetAnimator.SetBool(walkBackwardProperty, false);
                 return;
             }
+
+            if (StandingLeftSide)
+                if (RightSide > otherPlayer.LeftSide)
+                    return;
             
-            if (RightSide > otherPlayer.LeftSide)
-                return;
             if (TargetTransform.position.x > StageData.RightWall.position.x)
                 return;
             
+            int _direction = StandingLeftSide ? 1 : -1;
+            
             TargetAnimator.SetBool(walkBackwardProperty, true);
-            TargetTransform.Translate(_moveAmount * Vector3.forward * MoveSpeed * Time.deltaTime);
+            TargetTransform.Translate(_direction * _moveAmount * Vector3.forward * MoveSpeed * Time.deltaTime);
         }
         
         public override void MoveLeft(InputAction.CallbackContext? _context = null)

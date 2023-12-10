@@ -8,10 +8,12 @@ namespace ArcadeFighter
     [Serializable]
     public class UIManager : IDisposable
     {
-        public MainMenuUI  MainMenuUI;
-        public TimerUI     TimerUI;
-        public HealthBarUI HealthBarUI;
-        public GameOverUI  GameOverUI;
+        public MainMenuUI   MainMenuUI;
+        public TransitionUI TransitionUI;
+        public TimerUI      TimerUI;
+        public HealthBarUI  HealthBarUI_PlayerOne;
+        public HealthBarUI  HealthBarUI_PlayerTwo;
+        public GameOverUI   GameOverUI;
         
         private Dictionary<Type, GameUI> UITable = new ();
         
@@ -25,9 +27,12 @@ namespace ArcadeFighter
         {
             ApplicationStarter = _applicationStarter;
             
-            MainMenuUI.Initialized(this);
-            TimerUI   .Initialized(this);
-            GameOverUI.Initialized(this);
+            MainMenuUI  .Initialized(this);
+            TransitionUI.Initialized(this);
+            TimerUI     .Initialized(this);
+            HealthBarUI_PlayerOne.Initialized(this);
+            HealthBarUI_PlayerTwo.Initialized(this);
+            GameOverUI .Initialized(this);
             
             TimerUI.OnTimeUpEvent.AddListener(() => ApplicationStarter.StateMachineManager.ChangeState<GameOverState>());
             
