@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -101,12 +100,22 @@ namespace ArcadeFighter
                 {
                     otherPlayer.TargetAnimator.SetTrigger(onBlockProperty);
                     otherPlayer.ReduceHealth(ChipDamage);
+                    
+                    if(otherPlayer.BlockEffect.isPlaying)
+                        otherPlayer.BlockEffect.Stop();
+                    otherPlayer.BlockEffect.Play();
+                    
                     application.AudioManager.PlaySFX(SFXName.ONBLOCK);
                     return;
                 }
                 
                 otherPlayer.TargetAnimator.SetTrigger(getPunchTriggerProperty);
                 otherPlayer.ReduceHealth(AttackPower);
+                
+                if(otherPlayer.HitEffect.isPlaying)
+                    otherPlayer.HitEffect.Stop();
+                otherPlayer.HitEffect.Play();
+                
                 application.AudioManager.PlaySFX(SFXName.ONHIT);
                 return;
             }

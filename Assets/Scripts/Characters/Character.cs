@@ -18,6 +18,8 @@ namespace ArcadeFighter
         [field: SerializeField] public float AttackPower { get; private set; } = 12f;
         [field: SerializeField] public float ChipDamage  { get; private set; } = 5f;
         [field: SerializeField] public float MoveSpeed   { get; private set; } = 1f;
+        [field: SerializeField] public ParticleSystem HitEffect   { get; private set; }
+        [field: SerializeField] public ParticleSystem BlockEffect { get; private set; }
         
         [Header("Evade Sprint Forward Parameter")]
         [SerializeField] protected Vector3 originPos;
