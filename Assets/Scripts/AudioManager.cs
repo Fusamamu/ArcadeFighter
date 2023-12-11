@@ -28,7 +28,7 @@ namespace ArcadeFighter
 		[SerializeField] private AudioSource SFXSource;
 		[SerializeField] private AudioSource BGMSource;
 
-		public List<SoundData> AllSoundData = new List<SoundData>();
+		public List<SoundData> AllSoundData = new ();
 
 	    public ApplicationStarter ApplicationStarter { get; private set; }
 

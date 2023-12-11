@@ -38,7 +38,6 @@ namespace ArcadeFighter
             IsFinishUpdate = true;
             currentRecordIndex = 0;
             currentInputRecordData = null;
-            //ApplicationStarter.GameTime.ResetTime().StopUpdate();
         }
 
         private bool TryGetNextRecordData(int _currentIndex, out InputRecordData _data)

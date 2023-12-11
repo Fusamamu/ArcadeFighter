@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ArcadeFighter
@@ -14,7 +13,6 @@ namespace ArcadeFighter
 	public class InputState
 	{
 		public bool PlayerHoldPress;
-		public bool CanPress;
 		public CharacterInputAction CharacterInputAction;
 	}
 	
@@ -23,7 +21,6 @@ namespace ArcadeFighter
 		public InputType InputType;
 		
 		public bool IsPressed    { get; protected set; }
-		public bool IsTriggerred { get; protected set; }
         
 		public readonly Character    TargetCharacter;
 		public readonly InputAction  TargetInputAction;
@@ -95,11 +92,6 @@ namespace ArcadeFighter
 				if(InputType != InputType.CLICK)
 					InputManager.RecordInput(TargetCharacter.Type, this);
 			}
-		}
-
-		protected virtual bool CanPress()
-		{
-			return !TargetCharacter.IsSprintingForward;
 		}
         
 		public void Dispose()

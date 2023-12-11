@@ -39,12 +39,12 @@ namespace ArcadeFighter
         {
             BarRectTransform.localScale = new Vector3(0, 1, 1);
 
-            float _v = 0;
+            float _scaleValue = 0;
 
-            while (_v < 1f)
+            while (_scaleValue < 1f)
             {
-                _v += Time.deltaTime;
-                BarRectTransform.localScale = new Vector3(_v, 1, 1);
+                _scaleValue += Time.deltaTime;
+                BarRectTransform.localScale = new Vector3(_scaleValue, 1, 1);
                 yield return null;
             }
             
