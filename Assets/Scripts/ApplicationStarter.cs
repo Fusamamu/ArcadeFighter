@@ -60,6 +60,8 @@ namespace ArcadeFighter
 	        UIManager    .GetPlayersRef();
 	        
 	        AudioManager.PlayBGM();
+
+	        StateMachineManager.ChangeState<MainMenuState>();
         }
 
         private void Update()
@@ -74,13 +76,20 @@ namespace ArcadeFighter
 		        _character.Update();
         }
 
-        public void Reset()
+        public void ResetState(bool _transformInclude = true, bool _animationInclude = true)
         {
 	        foreach (var _character in Character.AllCharacters)
 	        {
 		        _character.ResetHealth();
-		        _character.ResetAnimation();
-		        _character.ResetPosition();
+
+		        if (_transformInclude)
+		        {
+			        _character.ResetPosition();
+			        _character.ResetRotation();
+		        }
+		        
+		        if(_animationInclude)
+					_character.ResetAnimation();
 	        }
         }
 

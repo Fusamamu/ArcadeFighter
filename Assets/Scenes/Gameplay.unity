@@ -2443,11 +2443,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 1
-  <State>k__BackingField: 0
   <Health>k__BackingField: 100
   <AttackRange>k__BackingField: 1.8
   <AttackPower>k__BackingField: 12
+  <ChipDamage>k__BackingField: 5
   <MoveSpeed>k__BackingField: 2
+  originPos: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  sprintSpeed: 0.5
+  sprintTValue: 0
+  <IsGuarding>k__BackingField: 0
+  <IsSprintingForward>k__BackingField: 0
   TargetTransform: {fileID: 509408840}
   TargetAnimator: {fileID: 516561320}
   TargetCollider: {fileID: 509408843}
@@ -2455,6 +2461,7 @@ MonoBehaviour:
     LeftWall: {fileID: 0}
     RightWall: {fileID: 0}
   originStandPosition: {x: 0, y: 0, z: 0}
+  originRotation: {x: 0, y: 0, z: 0, w: 0}
   OnGetHitEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -5547,11 +5554,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
-  <State>k__BackingField: 0
   <Health>k__BackingField: 100
   <AttackRange>k__BackingField: 1.8
-  <AttackPower>k__BackingField: 12
+  <AttackPower>k__BackingField: 51
+  <ChipDamage>k__BackingField: 5
   <MoveSpeed>k__BackingField: 3
+  originPos: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  sprintSpeed: 0.5
+  sprintTValue: 0
+  <IsGuarding>k__BackingField: 0
+  <IsSprintingForward>k__BackingField: 0
   TargetTransform: {fileID: 721057180}
   TargetAnimator: {fileID: 711760508}
   TargetCollider: {fileID: 721283519}
@@ -5559,6 +5572,7 @@ MonoBehaviour:
     LeftWall: {fileID: 0}
     RightWall: {fileID: 0}
   originStandPosition: {x: 0, y: 0, z: 0}
+  originRotation: {x: 0, y: 0, z: 0, w: 0}
   OnGetHitEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -7914,7 +7928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6498c0d9ca34e1db0e468c5e7ee2a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTimer: 20
+  StartTimer: 15
   LeftPlayer: {fileID: 721283517}
   RightPlayer: {fileID: 509408841}
   AudioManager:
@@ -8029,7 +8043,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.317
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

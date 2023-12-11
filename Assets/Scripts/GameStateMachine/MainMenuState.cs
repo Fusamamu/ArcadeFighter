@@ -12,6 +12,9 @@ namespace ArcadeFighter
         
         public override void OnEnter()
         {
+            application.UIManager.HealthBarUI_PlayerOne.Close();
+            application.UIManager.TimerUI.Close();
+            
             application.UIManager.MainMenuUI.Open();
         }
 

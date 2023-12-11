@@ -12,7 +12,7 @@ namespace ArcadeFighter
         
         public override void OnEnter()
         {
-            application.Reset();
+            application.ResetState();
 
             application.UIManager.HealthBarUI_PlayerOne.SetHealthBar(1);
             application.UIManager.HealthBarUI_PlayerTwo.SetHealthBar(1);
@@ -27,7 +27,11 @@ namespace ArcadeFighter
 
         public override void OnExit()
         {
-            application.Reset();
+            application.ResetState
+            (
+                _transformInclude: false,
+                _animationInclude: false
+            );
             
             application.UIManager.TimerUI.SetTimer(0);
             application.UIManager.TimerUI.StopCountDown();

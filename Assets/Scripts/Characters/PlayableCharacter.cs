@@ -7,24 +7,19 @@ namespace ArcadeFighter
 {
     public class PlayableCharacter : Character
     {
-        protected Vector3 originPos;
-        protected Vector3 targetPos;
-        protected float sprintSpeed = 1;
-        protected float t;
-        
         public override void Update()
         {
             if (IsSprintingForward)
             {
-                t += sprintSpeed * Time.deltaTime;
+                sprintTValue += sprintSpeed * Time.deltaTime;
 
-                t = Mathf.Clamp01(t);
+                sprintTValue = Mathf.Clamp01(sprintTValue);
 
-                TargetTransform.position = Vector3.Lerp(originPos, targetPos, t);
+                TargetTransform.position = Vector3.Lerp(originPos, targetPos, sprintTValue);
 
-                if (Math.Abs(t - 1.0f) < 0.02f)
+                if (Math.Abs(sprintTValue - 1.0f) < 0.02f)
                 {
-                    t = 0.0f;
+                    sprintTValue = 0.0f;
                     
                     originPos = Vector3.zero;
                     targetPos = Vector3.zero;
@@ -99,6 +94,9 @@ namespace ArcadeFighter
                 
             if (Vector3.Distance(TargetTransform.position, otherPlayer.TargetTransform.position) < AttackRange)
             {
+                if(otherPlayer.IsSprintingForward)
+                    return;
+                
                 if (otherPlayer.IsGuarding)
                 {
                     otherPlayer.TargetAnimator.SetTrigger(onBlockProperty);

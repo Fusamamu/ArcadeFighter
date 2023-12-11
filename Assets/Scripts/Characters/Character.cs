@@ -1,4 +1,5 @@
 using System;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -11,11 +12,18 @@ namespace ArcadeFighter
         
         [field: SerializeField] public PlayerType Type  { get; protected set; }
          
+        [field: Header("Character Attributes")]
         [field: SerializeField] public float Health      { get; private set; } = 100f;
         [field: SerializeField] public float AttackRange { get; private set; } = 2;
         [field: SerializeField] public float AttackPower { get; private set; } = 12f;
         [field: SerializeField] public float ChipDamage  { get; private set; } = 5f;
         [field: SerializeField] public float MoveSpeed   { get; private set; } = 1f;
+        
+        [Header("Evade Sprint Forward Parameter")]
+        [SerializeField] protected Vector3 originPos;
+        [SerializeField] protected Vector3 targetPos;
+        [SerializeField] protected float sprintSpeed = 0.5f;
+        [SerializeField] protected float sprintTValue;
 
         [field: SerializeField] public bool IsGuarding         { get; protected set; }
         [field: SerializeField] public bool IsSprintingForward { get; protected set; }
@@ -29,16 +37,15 @@ namespace ArcadeFighter
         
         public StageData StageData;
         
+        [Header("Game Character refs")]
         protected Character otherPlayer;
-
         public static Character[] AllCharacters = new Character[2];
         public static Character PlayerOne => AllCharacters[0];
         public static Character PlayerTwo => AllCharacters[1];
 
-        public bool IsActionProcess => processActionCoroutine != null;
-        protected Coroutine processActionCoroutine;
-
-        [SerializeField] private Vector3 originStandPosition;
+        [Header("Cached origin transform value")]
+        [ReadOnly, SerializeField] private Vector3    originStandPosition;
+        [ReadOnly, SerializeField] private Quaternion originRotation;
 
         public UnityEvent<float> OnGetHitEvent;
 
@@ -76,6 +83,7 @@ namespace ArcadeFighter
             }
             
             originStandPosition = TargetTransform.position;
+            originRotation      = TargetTransform.rotation;
         }
 
         public void GetOtherPlayer()
@@ -88,14 +96,20 @@ namespace ArcadeFighter
         }
 
         public void ResetHealth   () => Health = 100f;
-        public void ResetAnimation() => TargetAnimator.SetTrigger(resetIdleTriggerProperty);
+        public void ResetAnimation() => TargetAnimator.Rebind();
         public void ResetPosition () => TargetTransform.position = originStandPosition;
+        public void ResetRotation () => TargetTransform.rotation = originRotation;
 
         public void ReduceHealth(float _value)
         {
             Health -= _value;
+            
             if (Health <= 0f)
+            {
                 Health = 0;
+                TargetAnimator.SetTrigger(getKoTriggerProperty);
+                application.StateMachineManager.ChangeState<GameOverState>();
+            }
             
             OnGetHitEvent?.Invoke(Health / 100f);
         }

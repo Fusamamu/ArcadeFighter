@@ -30,7 +30,11 @@ namespace ArcadeFighter
 	    public void Initialized(ApplicationStarter _applicationStarter)
 	    {
 		    ApplicationStarter = _applicationStarter;
-		    originPosition = MainCamera.transform.position;
+		    
+		    var _transform = MainCamera.transform;
+		    
+		    originPosition = _transform.position;
+		    _transform.position = ZoomFrom;
 	    }
 
 	    public void GetPlayersRef()

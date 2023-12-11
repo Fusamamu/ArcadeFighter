@@ -9,6 +9,18 @@ namespace ArcadeFighter
     public class HealthBarUI : GameUI
     {
         public RectTransform BarRectTransform;
+        
+        public override void Open()
+        { 
+            base.Open();
+            UIParent.gameObject.SetActive(true);
+        }
+
+        public override void Close()
+        {
+            base.Close();
+            UIParent.gameObject.SetActive(false);
+        }
 
         public void SetHealthBar(float _percent)
         {

@@ -21,6 +21,18 @@ namespace ArcadeFighter
         {
             base.Initialized(_uiManager);
         }
+        
+        public override void Open()
+        { 
+            base.Open();
+            UIParent.gameObject.SetActive(true);
+        }
+
+        public override void Close()
+        {
+            base.Close();
+            UIParent.gameObject.SetActive(false);
+        }
 
         public Coroutine StartSetDefaultTimer()
         {
