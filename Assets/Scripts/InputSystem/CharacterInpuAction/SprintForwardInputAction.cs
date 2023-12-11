@@ -15,6 +15,11 @@ namespace ArcadeFighter
 			InputType = InputType.CLICK;
 		}
 		
+		public override void Update()
+		{
+		
+		}
+		
 		public override void RunPressedActionCommand()
 		{
 			TargetCharacter.EvadeSprintForward();

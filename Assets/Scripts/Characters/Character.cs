@@ -9,8 +9,7 @@ namespace ArcadeFighter
     {
         public bool StandingLeftSide => TargetTransform.position.x < otherPlayer.TargetTransform.position.x;
         
-        [field: SerializeField] public PlayerType     Type  { get; protected set; }
-        [field: SerializeField] public CharacterState State { get; protected set; } = CharacterState.IDLE;
+        [field: SerializeField] public PlayerType Type  { get; protected set; }
          
         [field: SerializeField] public float Health      { get; private set; } = 100f;
         [field: SerializeField] public float AttackRange { get; private set; } = 2;
@@ -18,7 +17,8 @@ namespace ArcadeFighter
         [field: SerializeField] public float ChipDamage  { get; private set; } = 5f;
         [field: SerializeField] public float MoveSpeed   { get; private set; } = 1f;
 
-        [field: SerializeField] public bool IsGuarding { get; protected set; }
+        [field: SerializeField] public bool IsGuarding         { get; protected set; }
+        [field: SerializeField] public bool IsSprintingForward { get; protected set; }
 
         public float RightSide => TargetTransform.position.x + TargetCollider.bounds.extents.x;
         public float LeftSide  => TargetTransform.position.x - TargetCollider.bounds.extents.x;

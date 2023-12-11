@@ -14,6 +14,7 @@ namespace ArcadeFighter
 	public class InputState
 	{
 		public bool PlayerHoldPress;
+		public bool CanPress;
 		public CharacterInputAction CharacterInputAction;
 	}
 	
@@ -98,7 +99,7 @@ namespace ArcadeFighter
 
 		protected virtual bool CanPress()
 		{
-			return !TargetCharacter.IsActionProcess;
+			return !TargetCharacter.IsSprintingForward;
 		}
         
 		public void Dispose()

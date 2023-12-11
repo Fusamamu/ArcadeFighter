@@ -7,8 +7,49 @@ namespace ArcadeFighter
 {
     public class PlayableCharacter : Character
     {
+        protected Vector3 originPos;
+        protected Vector3 targetPos;
+        protected float sprintSpeed = 1;
+        protected float t;
+        
+        public override void Update()
+        {
+            if (IsSprintingForward)
+            {
+                t += sprintSpeed * Time.deltaTime;
+
+                t = Mathf.Clamp01(t);
+
+                TargetTransform.position = Vector3.Lerp(originPos, targetPos, t);
+
+                if (Math.Abs(t - 1.0f) < 0.02f)
+                {
+                    t = 0.0f;
+                    
+                    originPos = Vector3.zero;
+                    targetPos = Vector3.zero;
+
+                    if (StandingLeftSide)
+                    {
+                        TargetTransform.rotation = Quaternion.Euler(0, 90, 0);
+                        otherPlayer.TargetTransform.rotation = Quaternion.Euler(0, -90, 0);
+                    }
+                    else
+                    {
+                        TargetTransform.rotation = Quaternion.Euler(0, -90, 0);
+                        otherPlayer.TargetTransform.rotation = Quaternion.Euler(0, 90, 0);
+                    }
+                    
+                    IsSprintingForward = false;
+                }
+            }
+        }
+        
         public override void MoveLeft(float _moveAmount)
         {
+            if(IsSprintingForward)
+                return;
+            
             if (_moveAmount < 0.02f)
             {
                 TargetAnimator.SetBool(walkForwardProperty, false);
@@ -25,11 +66,14 @@ namespace ArcadeFighter
             int _direction = StandingLeftSide ? 1 : -1;
                 
             TargetAnimator.SetBool(walkForwardProperty, true);
-            TargetTransform.Translate(_direction *_moveAmount * Vector3.back * MoveSpeed * Time.deltaTime);
+            TargetTransform.Translate(_direction * _moveAmount * Vector3.back * MoveSpeed * Time.deltaTime);
         }
         
         public override void MoveRight(float _moveAmount)
         {
+            if(IsSprintingForward)
+                return;
+            
             if (_moveAmount < 0.02f)
             {
                 TargetAnimator.SetBool(walkBackwardProperty, false);
@@ -96,6 +140,18 @@ namespace ArcadeFighter
         
         public override void EvadeSprintForward(InputAction.CallbackContext? _context = null)
         {
+            if(IsSprintingForward)
+                return;
+            
+            IsSprintingForward = true;
+
+            originPos = TargetTransform.transform.position;
+            
+            if (StandingLeftSide)
+                targetPos = originPos + new Vector3(3, 0, 0);
+            else
+                targetPos = originPos - new Vector3(3, 0, 0);
+            
             TargetAnimator.ResetTrigger(sprintForwardTriggerProperty);
             TargetAnimator.SetTrigger(sprintForwardTriggerProperty);
             
@@ -108,29 +164,5 @@ namespace ArcadeFighter
             
             application.AudioManager.PlaySFX(SFXName.JUMP);
         }
-
-        // private IEnumerator TriggerCoroutine(int _propertyID, Action _onTriggerCompleted = null)
-        // {
-        //     TargetAnimator.SetTrigger(_propertyID);
-        //     yield return new WaitUntil(() => TargetAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
-        //     yield return new WaitUntil(() => TargetAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
-        //     _onTriggerCompleted?.Invoke();
-        //     processActionCoroutine = null;
-        // }
-        //
-        // private IEnumerator AttackCoroutine()
-        // {
-        //     TargetAnimator.SetTrigger(punchTriggerProperty);
-        //
-        //     yield return new WaitUntil(() => TargetAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
-        //         
-        //     if (Vector3.Distance(TargetTransform.position, otherPlayer.TargetTransform.position) < AttackRange)
-        //     {
-        //         otherPlayer.TargetAnimator.SetTrigger(getPunchTriggerProperty);
-        //         otherPlayer.ReduceHealth(AttackPower);
-        //     }
-        //
-        //     processActionCoroutine = null;
-        // }
     }
 }
