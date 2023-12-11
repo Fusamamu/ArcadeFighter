@@ -82,6 +82,15 @@ namespace ArcadeFighter
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SprintForward"",
+                    ""type"": ""Button"",
+                    ""id"": ""1d9e2df3-30a9-4f07-bf14-9f691e1d5efc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -148,6 +157,17 @@ namespace ArcadeFighter
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34843b63-5a15-442e-84ec-06865b7e089d"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SprintForward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -292,6 +312,7 @@ namespace ArcadeFighter
             m_LeftPlayer_Block = m_LeftPlayer.FindAction("Block", throwIfNotFound: true);
             m_LeftPlayer_Evade = m_LeftPlayer.FindAction("Evade", throwIfNotFound: true);
             m_LeftPlayer_Jump = m_LeftPlayer.FindAction("Jump", throwIfNotFound: true);
+            m_LeftPlayer_SprintForward = m_LeftPlayer.FindAction("SprintForward", throwIfNotFound: true);
             // RightPlayer
             m_RightPlayer = asset.FindActionMap("RightPlayer", throwIfNotFound: true);
             m_RightPlayer_MoveLeft = m_RightPlayer.FindAction("MoveLeft", throwIfNotFound: true);
@@ -367,6 +388,7 @@ namespace ArcadeFighter
         private readonly InputAction m_LeftPlayer_Block;
         private readonly InputAction m_LeftPlayer_Evade;
         private readonly InputAction m_LeftPlayer_Jump;
+        private readonly InputAction m_LeftPlayer_SprintForward;
         public struct LeftPlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -377,6 +399,7 @@ namespace ArcadeFighter
             public InputAction @Block => m_Wrapper.m_LeftPlayer_Block;
             public InputAction @Evade => m_Wrapper.m_LeftPlayer_Evade;
             public InputAction @Jump => m_Wrapper.m_LeftPlayer_Jump;
+            public InputAction @SprintForward => m_Wrapper.m_LeftPlayer_SprintForward;
             public InputActionMap Get() { return m_Wrapper.m_LeftPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -404,6 +427,9 @@ namespace ArcadeFighter
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @SprintForward.started += instance.OnSprintForward;
+                @SprintForward.performed += instance.OnSprintForward;
+                @SprintForward.canceled += instance.OnSprintForward;
             }
 
             private void UnregisterCallbacks(ILeftPlayerActions instance)
@@ -426,6 +452,9 @@ namespace ArcadeFighter
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @SprintForward.started -= instance.OnSprintForward;
+                @SprintForward.performed -= instance.OnSprintForward;
+                @SprintForward.canceled -= instance.OnSprintForward;
             }
 
             public void RemoveCallbacks(ILeftPlayerActions instance)
@@ -537,6 +566,7 @@ namespace ArcadeFighter
             void OnBlock(InputAction.CallbackContext context);
             void OnEvade(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnSprintForward(InputAction.CallbackContext context);
         }
         public interface IRightPlayerActions
         {

@@ -14,7 +14,6 @@ namespace ArcadeFighter
 	public class InputState
 	{
 		public bool PlayerHoldPress;
-		public Character Character;
 		public CharacterInputAction CharacterInputAction;
 	}
 	
@@ -30,9 +29,6 @@ namespace ArcadeFighter
 		public readonly InputManager InputManager;
 
 		public readonly string InputActionName;
-
-		// public static CharacterInputAction CurrentInputAction;
-		// public static bool PlayerHeldPress;
 
 		protected static Dictionary<PlayerType, InputState> InputStateTable = new ()
 		{
@@ -80,8 +76,6 @@ namespace ArcadeFighter
 			}
 			
 			IsPressed = true;
-			//InputManager.PlayerOneInputRecorder.RecordInput(this);
-			
 			InputManager.RecordInput(TargetCharacter.Type, this);
 		}
         
@@ -99,7 +93,6 @@ namespace ArcadeFighter
 				
 				if(InputType != InputType.CLICK)
 					InputManager.RecordInput(TargetCharacter.Type, this);
-					//InputManager.PlayerOneInputRecorder.RecordInput(this);
 			}
 		}
 

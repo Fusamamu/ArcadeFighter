@@ -1,40 +1,23 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ArcadeFighter
 {
-	public class MoveRightInputAction : CharacterInputAction
+	public class SprintForwardInputAction : CharacterInputAction
 	{
-		private float moveRightValue = 1f;
-        
-		public MoveRightInputAction
+		public SprintForwardInputAction
 		(
 			Character    _character, 
-			InputAction  _inputAction,
+			InputAction  _inputAction, 
 			InputManager _inputManager
 		) : base(_character, _inputAction, _inputManager)
 		{
-			InputType = InputType.PRESSHOLD;
-		}
-        
-		public override void Update()
-		{
-			if (!IsPressed)
-			{
-				RunReleasedActionCommand();
-				return;
-			}
-
-			RunPressedActionCommand();
+			InputType = InputType.CLICK;
 		}
 		
 		public override void RunPressedActionCommand()
 		{
-			TargetCharacter.MoveRight(moveRightValue);
-		}
-		
-		public override void RunReleasedActionCommand()
-		{
-			TargetCharacter.MoveRight(0);
+			TargetCharacter.EvadeSprintForward();
 		}
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)
@@ -44,6 +27,7 @@ namespace ArcadeFighter
 					return;
 			
 			base.OnPressedInputHandler(_context);
+			TargetCharacter.EvadeSprintForward(_context);
 		}
 	}
 }

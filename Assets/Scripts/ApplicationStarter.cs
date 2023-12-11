@@ -19,6 +19,7 @@ namespace ArcadeFighter
 	    public Character LeftPlayer;
 	    public Character RightPlayer;
 
+	    public AudioManager        AudioManager;
 	    public InputManager        InputManager;
 	    public CameraManager       CameraManager;
 	    public UIManager           UIManager;
@@ -27,18 +28,12 @@ namespace ArcadeFighter
 	    public StageData GameStageData;
 	    
 	    public static GameTime GameTime = new();
-	    
- #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            
-        }
- #endif
         
         private void Awake()
         {
 	        StateMachineManager = new StateMachineManager();
-	        
+
+	        AudioManager       .Initialized(this);
 	        InputManager       .Initialized(this);
 	        CameraManager      .Initialized(this);
 	        UIManager          .Initialized(this);
@@ -63,6 +58,8 @@ namespace ArcadeFighter
 	        
 	        CameraManager.GetPlayersRef();
 	        UIManager    .GetPlayersRef();
+	        
+	        AudioManager.PlayBGM();
         }
 
         private void Update()

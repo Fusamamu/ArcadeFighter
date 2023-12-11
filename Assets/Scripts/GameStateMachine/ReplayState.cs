@@ -22,7 +22,6 @@ namespace ArcadeFighter
             
             application.CameraManager.StartUpdate();
             
-            //application.InputManager.PlayerOneInputRecorder.StartReplay();
             application.InputManager.StartReplay();
         }
 
@@ -36,13 +35,11 @@ namespace ArcadeFighter
             application.CameraManager.StopUpdate();
             application.CameraManager.ResetCamera();
             
-            //application.InputManager.PlayerOneInputRecorder.StopReplay();
             application.InputManager.StopReplay();
         }
 
         public override void OnUpdate()
         {
-            //application.InputManager.PlayerOneInputRecorder.UpdateReplay();
             application.InputManager.UpdateReplay();
         }
     }

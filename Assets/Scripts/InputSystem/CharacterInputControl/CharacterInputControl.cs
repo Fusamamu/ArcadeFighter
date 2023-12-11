@@ -10,7 +10,7 @@ namespace ArcadeFighter
 
         protected readonly InputManager inputManager;
         
-        protected readonly Dictionary<string, CharacterInputAction> characterInputActionTable = new Dictionary<string, CharacterInputAction>();
+        protected readonly Dictionary<string, CharacterInputAction> characterInputActionTable = new ();
 
         public CharacterInputControl(InputManager _inputManager, Character _character)
         {

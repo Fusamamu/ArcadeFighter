@@ -19,22 +19,12 @@ namespace ArcadeFighter
 		{
 			TargetCharacter.Evade();
 		}
-		
-		public override void RunReleasedActionCommand()
-		{
-		}
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
-			// if(PlayerHeldPress)
-			// 	return;
-			
 			if (InputStateTable.TryGetValue(TargetCharacter.Type, out var _state))
-			{
 				if (_state.PlayerHoldPress)
 					return;
-			}
-			
 			
 			base.OnPressedInputHandler(_context);
 			TargetCharacter.Evade(_context);

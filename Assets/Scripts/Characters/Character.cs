@@ -15,7 +15,10 @@ namespace ArcadeFighter
         [field: SerializeField] public float Health      { get; private set; } = 100f;
         [field: SerializeField] public float AttackRange { get; private set; } = 2;
         [field: SerializeField] public float AttackPower { get; private set; } = 12f;
+        [field: SerializeField] public float ChipDamage  { get; private set; } = 5f;
         [field: SerializeField] public float MoveSpeed   { get; private set; } = 1f;
+
+        [field: SerializeField] public bool IsGuarding { get; protected set; }
 
         public float RightSide => TargetTransform.position.x + TargetCollider.bounds.extents.x;
         public float LeftSide  => TargetTransform.position.x - TargetCollider.bounds.extents.x;
@@ -39,17 +42,19 @@ namespace ArcadeFighter
 
         public UnityEvent<float> OnGetHitEvent;
 
-        private ApplicationStarter application;
+        protected ApplicationStarter application;
         
-        protected static readonly int walkForwardProperty      = Animator.StringToHash("Walk Forward");
-        protected static readonly int walkBackwardProperty     = Animator.StringToHash("Walk Backward");
-        protected static readonly int punchTriggerProperty     = Animator.StringToHash("PunchTrigger");
-        protected static readonly int guardProperty            = Animator.StringToHash("Guard");
-        protected static readonly int jumpTriggerProperty      = Animator.StringToHash("JumpTrigger");
-        protected static readonly int evadeTriggerProperty     = Animator.StringToHash("EvadeTrigger");
-        protected static readonly int getPunchTriggerProperty  = Animator.StringToHash("GetPunchTrigger");
-        protected static readonly int getKoTriggerProperty     = Animator.StringToHash("GetKOTrigger");
-        protected static readonly int resetIdleTriggerProperty = Animator.StringToHash("ResetIdle");
+        protected static readonly int walkForwardProperty          = Animator.StringToHash("Walk Forward");
+        protected static readonly int walkBackwardProperty         = Animator.StringToHash("Walk Backward");
+        protected static readonly int punchTriggerProperty         = Animator.StringToHash("PunchTrigger");
+        protected static readonly int guardProperty                = Animator.StringToHash("Guard");
+        protected static readonly int jumpTriggerProperty          = Animator.StringToHash("JumpTrigger");
+        protected static readonly int evadeTriggerProperty         = Animator.StringToHash("EvadeTrigger");
+        protected static readonly int getPunchTriggerProperty      = Animator.StringToHash("GetPunchTrigger");
+        protected static readonly int getKoTriggerProperty         = Animator.StringToHash("GetKOTrigger");
+        protected static readonly int resetIdleTriggerProperty     = Animator.StringToHash("ResetIdle");
+        protected static readonly int onBlockProperty              = Animator.StringToHash("OnBlock");
+        protected static readonly int sprintForwardTriggerProperty = Animator.StringToHash("SprintForwardTrigger");
 
         public Character()
         {
@@ -116,6 +121,10 @@ namespace ArcadeFighter
         }
 
         public virtual void Evade(InputAction.CallbackContext? _context = null)
+        {
+        }
+        
+        public virtual void EvadeSprintForward(InputAction.CallbackContext? _context = null)
         {
         }
         
