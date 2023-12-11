@@ -17,6 +17,8 @@ namespace ArcadeFighter
             
             application.UIManager.TimerUI.Open();
             application.UIManager.HealthBarUI_PlayerOne.Open();
+            
+            application.CameraManager.SwitchCamera(CameraManager.CameraTarget.MAIN);
 
             application.StartCoroutine(OnEnterCoroutine());
         }

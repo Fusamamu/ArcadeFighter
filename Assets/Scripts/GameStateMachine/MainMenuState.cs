@@ -16,6 +16,8 @@ namespace ArcadeFighter
             application.UIManager.TimerUI.Close();
             
             application.UIManager.MainMenuUI.Open();
+            
+            application.CameraManager.SwitchCamera(CameraManager.CameraTarget.MAIN);
         }
 
         public override void OnExit()

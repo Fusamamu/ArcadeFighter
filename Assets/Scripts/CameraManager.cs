@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 namespace ArcadeFighter
@@ -7,7 +9,17 @@ namespace ArcadeFighter
 	[Serializable]
 	public class CameraManager
 	{
-		public Camera MainCamera;
+		public enum CameraTarget
+		{
+			MAIN, P0, P1
+		}
+		
+		public CinemachineVirtualCamera MainCamera;
+		public CinemachineVirtualCamera LookAtP0Camera;
+		public CinemachineVirtualCamera LookAtP1Camera;
+
+		private int selectedCameraIndex;
+		private List<CinemachineVirtualCamera> allCamara = new List<CinemachineVirtualCamera>();
 
 		public Vector3 ZoomFrom;
 		public Vector3 ZoomTo;
@@ -35,6 +47,10 @@ namespace ArcadeFighter
 		    
 		    originPosition = _transform.position;
 		    _transform.position = ZoomFrom;
+
+		    allCamara.Add(MainCamera);
+		    allCamara.Add(LookAtP0Camera);
+		    allCamara.Add(LookAtP1Camera);
 	    }
 
 	    public void GetPlayersRef()
@@ -72,16 +88,6 @@ namespace ArcadeFighter
 
 		    MainCamera.transform.position = new Vector3(_currentPosition.x, _currentPosition.y, _targetZPos);
 	    }
-	    
-	    public void ZoomIn()
-	    {
-		    
-	    }
-
-	    public void ZoomOut()
-	    {
-		    
-	    }
 
 	    public Coroutine StartZoomIntro()
 	    {
@@ -102,6 +108,42 @@ namespace ArcadeFighter
 		    }
 
 		    MainCamera.transform.position = ZoomTo;
+	    }
+
+	    public void SwitchCamera()
+	    {
+		    selectedCameraIndex++;
+		    if (selectedCameraIndex >= allCamara.Count)
+			    selectedCameraIndex = 0;
+		    
+		    SetCameraPriority(0);
+		    allCamara[selectedCameraIndex].Priority = 1;
+	    }
+
+	    public void SwitchCamera(CameraTarget _target)
+	    {
+		    switch (_target)
+		    {
+			    case CameraTarget.MAIN:
+				    SetCameraPriority(0);
+				    MainCamera.Priority = 1;
+				    break;
+			    case CameraTarget.P0:
+				    SetCameraPriority(0);
+				    LookAtP0Camera.Priority = 1;
+				    break;
+			    case CameraTarget.P1:
+				    SetCameraPriority(0);
+				    LookAtP1Camera.Priority = 1;
+				    break;
+		    }
+	    }
+
+	    private void SetCameraPriority(int _value)
+	    {
+		    MainCamera.Priority     = _value;
+		    LookAtP0Camera.Priority = _value;
+		    LookAtP1Camera.Priority = _value;
 	    }
     }
 }

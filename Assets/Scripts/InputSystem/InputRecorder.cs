@@ -13,7 +13,8 @@ namespace ArcadeFighter
         [SerializeField] private int currentRecordIndex;
         [SerializeField] private InputRecordData currentInputRecordData;
 
-        private bool isUpdateReplay;
+        public bool IsUpdateReplay;
+        public bool IsFinishUpdate;
         
         public void RecordInput(CharacterInputAction _characterInputAction)
         {
@@ -24,7 +25,8 @@ namespace ArcadeFighter
 
         public void StartReplay()
         {
-            isUpdateReplay = true;
+            IsUpdateReplay = true;
+            IsFinishUpdate = false;
             currentRecordIndex = 0;
             currentInputRecordData = AllRecordedInputs.First();
             ApplicationStarter.GameTime.ResetTime().StartUpdate();
@@ -32,10 +34,11 @@ namespace ArcadeFighter
         
         public void StopReplay ()
         {
-            isUpdateReplay = false;
+            IsUpdateReplay = false;
+            IsFinishUpdate = true;
             currentRecordIndex = 0;
             currentInputRecordData = null;
-            ApplicationStarter.GameTime.ResetTime().StopUpdate();
+            //ApplicationStarter.GameTime.ResetTime().StopUpdate();
         }
 
         private bool TryGetNextRecordData(int _currentIndex, out InputRecordData _data)
@@ -54,7 +57,7 @@ namespace ArcadeFighter
 
         public void UpdateReplay()
         {
-            if(!isUpdateReplay || currentInputRecordData == null)
+            if(!IsUpdateReplay || currentInputRecordData == null)
                 return;
             
             var _elapsedTime = ApplicationStarter.GameTime.ElapsedTime;

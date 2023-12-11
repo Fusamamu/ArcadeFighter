@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ArcadeFighter
 {
@@ -80,8 +82,17 @@ namespace ArcadeFighter
 
         public void UpdateReplay()
         {
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+                applicationStarter.CameraManager.SwitchCamera();
+            
             PlayerOneInputRecorder.UpdateReplay();
             PlayerTwoInputRecorder.UpdateReplay();
+
+            if (PlayerOneInputRecorder.IsFinishUpdate && PlayerTwoInputRecorder.IsFinishUpdate)
+            {
+                ApplicationStarter.GameTime.ResetTime().StopUpdate();
+                applicationStarter.StateMachineManager.ChangeState<GameOverState>();
+            }
         }
 
         public void ClearAllRecord()

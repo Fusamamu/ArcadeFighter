@@ -230,6 +230,15 @@ namespace ArcadeFighter
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SprintForward"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ef5edd1-e8b9-421f-b0b5-0296410085d0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -298,6 +307,17 @@ namespace ArcadeFighter
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""030484f9-7592-453a-b752-011ae1321c6a"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SprintForward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -321,6 +341,7 @@ namespace ArcadeFighter
             m_RightPlayer_Block = m_RightPlayer.FindAction("Block", throwIfNotFound: true);
             m_RightPlayer_Evade = m_RightPlayer.FindAction("Evade", throwIfNotFound: true);
             m_RightPlayer_Jump = m_RightPlayer.FindAction("Jump", throwIfNotFound: true);
+            m_RightPlayer_SprintForward = m_RightPlayer.FindAction("SprintForward", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -482,6 +503,7 @@ namespace ArcadeFighter
         private readonly InputAction m_RightPlayer_Block;
         private readonly InputAction m_RightPlayer_Evade;
         private readonly InputAction m_RightPlayer_Jump;
+        private readonly InputAction m_RightPlayer_SprintForward;
         public struct RightPlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -492,6 +514,7 @@ namespace ArcadeFighter
             public InputAction @Block => m_Wrapper.m_RightPlayer_Block;
             public InputAction @Evade => m_Wrapper.m_RightPlayer_Evade;
             public InputAction @Jump => m_Wrapper.m_RightPlayer_Jump;
+            public InputAction @SprintForward => m_Wrapper.m_RightPlayer_SprintForward;
             public InputActionMap Get() { return m_Wrapper.m_RightPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -519,6 +542,9 @@ namespace ArcadeFighter
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @SprintForward.started += instance.OnSprintForward;
+                @SprintForward.performed += instance.OnSprintForward;
+                @SprintForward.canceled += instance.OnSprintForward;
             }
 
             private void UnregisterCallbacks(IRightPlayerActions instance)
@@ -541,6 +567,9 @@ namespace ArcadeFighter
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @SprintForward.started -= instance.OnSprintForward;
+                @SprintForward.performed -= instance.OnSprintForward;
+                @SprintForward.canceled -= instance.OnSprintForward;
             }
 
             public void RemoveCallbacks(IRightPlayerActions instance)
@@ -576,6 +605,7 @@ namespace ArcadeFighter
             void OnBlock(InputAction.CallbackContext context);
             void OnEvade(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnSprintForward(InputAction.CallbackContext context);
         }
     }
 }
