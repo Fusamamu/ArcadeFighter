@@ -10,7 +10,8 @@ namespace ArcadeFighter
         
         private readonly Dictionary<PlayerType, CharacterInputControl> inputControlTable = new ();
 
-        public InputRecorder InputRecorder = new ();
+        public InputRecorder PlayerOneInputRecorder = new ();
+        public InputRecorder PlayerTwoInputRecorder = new ();
 
         private ApplicationStarter applicationStarter;
 
@@ -63,6 +64,45 @@ namespace ArcadeFighter
             inputControlTable.Add(_playerType, _characterInputControl);
 
             return _characterInputControl;
+        }
+
+        public void StartReplay()
+        {
+            PlayerOneInputRecorder.StartReplay();
+            PlayerTwoInputRecorder.StartReplay();
+        }
+
+        public void StopReplay()
+        {
+            PlayerOneInputRecorder.StopReplay();
+            PlayerTwoInputRecorder.StopReplay();
+        }
+
+        public void UpdateReplay()
+        {
+            PlayerOneInputRecorder.UpdateReplay();
+            PlayerTwoInputRecorder.UpdateReplay();
+        }
+
+        public void ClearAllRecord()
+        {
+            PlayerOneInputRecorder.ClearInputRecord();
+            PlayerTwoInputRecorder.ClearInputRecord();
+        }
+
+        public void RecordInput(PlayerType _type, CharacterInputAction _inputAction)
+        {
+            switch (_type)
+            {
+                case PlayerType.PLAYER_ONE:
+                    PlayerOneInputRecorder.RecordInput(_inputAction);
+                    break;
+                case PlayerType.PLAYER_TWO:
+                    PlayerTwoInputRecorder.RecordInput(_inputAction);
+                    break;
+                case PlayerType.AI:
+                    break;
+            }
         }
     }
 }

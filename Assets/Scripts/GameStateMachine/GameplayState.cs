@@ -13,7 +13,7 @@ namespace ArcadeFighter
         public override void OnEnter()
         {
             application.Reset();
-            application.InputManager.InputRecorder.ClearInputRecord();
+            application.InputManager.ClearAllRecord();
 
             application.StartCoroutine(OnEnterCoroutine());
         }

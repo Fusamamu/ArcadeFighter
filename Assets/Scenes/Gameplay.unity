@@ -7916,14 +7916,28 @@ MonoBehaviour:
   LeftPlayer: {fileID: 721283517}
   RightPlayer: {fileID: 509408841}
   InputManager:
-    InputRecorder:
+    PlayerOneInputRecorder:
+      AllRecordedInputs: []
       currentRecordIndex: 0
       currentInputRecordData:
+        InputActionName: 
+        InputType: 0
         TimeStamp: 0
         IsPressed: 0
         IsTriggerred: 0
-        InputActionName: 
         Character: {fileID: 0}
+        HasTriggered: 0
+    PlayerTwoInputRecorder:
+      AllRecordedInputs: []
+      currentRecordIndex: 0
+      currentInputRecordData:
+        InputActionName: 
+        InputType: 0
+        TimeStamp: 0
+        IsPressed: 0
+        IsTriggerred: 0
+        Character: {fileID: 0}
+        HasTriggered: 0
   CameraManager:
     MainCamera: {fileID: 109927887}
     ZoomFrom: {x: 0, y: 1.53, z: 3.46}

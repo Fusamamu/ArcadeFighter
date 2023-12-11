@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,13 @@ namespace ArcadeFighter
 	{
 		PRESSHOLD, 
 		CLICK
+	}
+
+	public class InputState
+	{
+		public bool PlayerHoldPress;
+		public Character Character;
+		public CharacterInputAction CharacterInputAction;
 	}
 	
 	public class CharacterInputAction : IDisposable
@@ -23,8 +31,14 @@ namespace ArcadeFighter
 
 		public readonly string InputActionName;
 
-		public static CharacterInputAction CurrentInputAction;
-		public static bool PlayerHeldPress;
+		// public static CharacterInputAction CurrentInputAction;
+		// public static bool PlayerHeldPress;
+
+		protected static Dictionary<PlayerType, InputState> InputStateTable = new ()
+		{
+			{ PlayerType.PLAYER_ONE, new InputState() },
+			{ PlayerType.PLAYER_TWO, new InputState() },
+		};
 
 		public CharacterInputAction(Character _character, InputAction _inputAction, InputManager _inputManager)
 		{
@@ -56,27 +70,36 @@ namespace ArcadeFighter
         
 		protected virtual void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
-			if (!PlayerHeldPress)
+			if (InputStateTable.TryGetValue(TargetCharacter.Type, out var _state))
 			{
-				PlayerHeldPress    = true;
-				CurrentInputAction = this;
+				if (!_state.PlayerHoldPress)
+				{
+					_state.PlayerHoldPress     = true;
+					_state.CharacterInputAction = this;
+				}
 			}
 			
 			IsPressed = true;
-			InputManager.InputRecorder.RecordInput(this);
+			//InputManager.PlayerOneInputRecorder.RecordInput(this);
+			
+			InputManager.RecordInput(TargetCharacter.Type, this);
 		}
         
 		protected virtual void OnReleasedInputHandler(InputAction.CallbackContext _context)
 		{
-			if (PlayerHeldPress && CurrentInputAction == this)
-				PlayerHeldPress = false;
+			if (InputStateTable.TryGetValue(TargetCharacter.Type, out var _state))
+			{
+				if (_state.PlayerHoldPress && _state.CharacterInputAction == this)
+					_state.PlayerHoldPress = false;
+			}
 
 			if (IsPressed)
 			{
 				IsPressed = false;
 				
 				if(InputType != InputType.CLICK)
-					InputManager.InputRecorder.RecordInput(this);
+					InputManager.RecordInput(TargetCharacter.Type, this);
+					//InputManager.PlayerOneInputRecorder.RecordInput(this);
 			}
 		}
 
