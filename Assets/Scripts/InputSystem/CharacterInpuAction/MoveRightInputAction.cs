@@ -13,6 +13,7 @@ namespace ArcadeFighter
 			InputManager _inputManager
 		) : base(_character, _inputAction, _inputManager)
 		{
+			InputType = InputType.PRESSHOLD;
 		}
         
 		public override void Update()
@@ -38,14 +39,15 @@ namespace ArcadeFighter
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
+			if(PlayerHeldPress)
+				return;
+			
 			base.OnPressedInputHandler(_context);
-			TargetCharacter.MoveRight(_context);
 		}
         
 		protected override void OnReleasedInputHandler(InputAction.CallbackContext _context)
 		{
 			base.OnReleasedInputHandler(_context);
-			TargetCharacter.MoveRight(_context);
 		}
 	}
 }

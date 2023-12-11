@@ -37,6 +37,8 @@ namespace ArcadeFighter
             application.InputManager.StartUpdateInputControl();
             application.InputManager.PlayerInput.Enable();
             
+            application.CameraManager.StartUpdate();
+            
             ApplicationStarter
                 .GameTime
                 .ResetTime()
@@ -52,11 +54,17 @@ namespace ArcadeFighter
             
             application.Reset();
             
+            application.UIManager.HealthBarUI_PlayerOne.SetHealthBar(1);
+            application.UIManager.HealthBarUI_PlayerTwo.SetHealthBar(1);
+            
             application.UIManager.TimerUI.SetTimer(0);
             application.UIManager.TimerUI.StopCountDown();
             
             application.InputManager.StopUpdateInputControl();
             application.InputManager.PlayerInput.Disable();
+            
+            application.CameraManager.StopUpdate();
+            application.CameraManager.ResetCamera();
         }
     }
 }

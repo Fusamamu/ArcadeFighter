@@ -44,6 +44,12 @@ namespace ArcadeFighter
             GameOverUI.ReturnToMainMenuButton.onClick.AddListener(() => ApplicationStarter.StateMachineManager.ChangeState<MainMenuState>());
         }
         
+        public void GetPlayersRef()
+        {
+            Character.PlayerOne.OnGetHitEvent.AddListener(_value => HealthBarUI_PlayerOne.SetHealthBar(_value));
+            Character.PlayerTwo.OnGetHitEvent.AddListener(_value => HealthBarUI_PlayerTwo.SetHealthBar(_value));
+        }
+        
         public void Add(GameUI _ui)
         {
             if (!UITable.ContainsKey(_ui.GetType()))

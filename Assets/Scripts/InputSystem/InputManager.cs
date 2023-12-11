@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace ArcadeFighter
@@ -9,7 +8,7 @@ namespace ArcadeFighter
     {
         public PlayerInput PlayerInput;
         
-        private readonly Dictionary<PlayerType, CharacterInputControl> inputControlTable = new Dictionary<PlayerType, CharacterInputControl>();
+        private readonly Dictionary<PlayerType, CharacterInputControl> inputControlTable = new ();
 
         public InputRecorder InputRecorder = new ();
 

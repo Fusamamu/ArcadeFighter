@@ -2445,7 +2445,8 @@ MonoBehaviour:
   <Type>k__BackingField: 1
   <State>k__BackingField: 0
   <Health>k__BackingField: 100
-  <AttackRange>k__BackingField: 3
+  <AttackRange>k__BackingField: 1.8
+  <AttackPower>k__BackingField: 12
   <MoveSpeed>k__BackingField: 2
   TargetTransform: {fileID: 509408840}
   TargetAnimator: {fileID: 516561320}
@@ -2454,6 +2455,9 @@ MonoBehaviour:
     LeftWall: {fileID: 0}
     RightWall: {fileID: 0}
   originStandPosition: {x: 0, y: 0, z: 0}
+  OnGetHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &509408842
 Transform:
   m_ObjectHideFlags: 0
@@ -5546,6 +5550,7 @@ MonoBehaviour:
   <State>k__BackingField: 0
   <Health>k__BackingField: 100
   <AttackRange>k__BackingField: 1.8
+  <AttackPower>k__BackingField: 12
   <MoveSpeed>k__BackingField: 3
   TargetTransform: {fileID: 721057180}
   TargetAnimator: {fileID: 711760508}
@@ -5554,6 +5559,9 @@ MonoBehaviour:
     LeftWall: {fileID: 0}
     RightWall: {fileID: 0}
   originStandPosition: {x: 0, y: 0, z: 0}
+  OnGetHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &721283518
 GameObject:
   m_ObjectHideFlags: 0
@@ -7904,7 +7912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6498c0d9ca34e1db0e468c5e7ee2a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTimer: 5
+  StartTimer: 20
   LeftPlayer: {fileID: 721283517}
   RightPlayer: {fileID: 509408841}
   InputManager:
@@ -7917,11 +7925,13 @@ MonoBehaviour:
         InputActionName: 
         Character: {fileID: 0}
   CameraManager:
-    MainCamera: {fileID: 0}
+    MainCamera: {fileID: 109927887}
     ZoomFrom: {x: 0, y: 1.53, z: 3.46}
     ZoomTo: {x: 0, y: 1.53, z: -6.41}
-    Duration: 2
-    <ZoomSpeed>k__BackingField: 1
+    <ZoomIntroDuration>k__BackingField: 2
+    <ZoomSpeed>k__BackingField: 300
+    <minZoom>k__BackingField: 3
+    <maxZoom>k__BackingField: 8
   UIManager:
     MainMenuUI:
       UIParent: {fileID: 2133710264}

@@ -13,9 +13,14 @@ namespace ArcadeFighter
         public override void OnEnter()
         {
             application.Reset();
+
+            application.UIManager.HealthBarUI_PlayerOne.SetHealthBar(1);
+            application.UIManager.HealthBarUI_PlayerTwo.SetHealthBar(1);
             
             application.UIManager.TimerUI.SetDefaultTimer();
             application.UIManager.TimerUI.StartCountDown();
+            
+            application.CameraManager.StartUpdate();
             
             application.InputManager.InputRecorder.StartReplay();
         }
@@ -26,6 +31,9 @@ namespace ArcadeFighter
             
             application.UIManager.TimerUI.SetTimer(0);
             application.UIManager.TimerUI.StopCountDown();
+            
+            application.CameraManager.StopUpdate();
+            application.CameraManager.ResetCamera();
             
             application.InputManager.InputRecorder.StopReplay();
         }

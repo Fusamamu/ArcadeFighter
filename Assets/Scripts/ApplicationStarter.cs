@@ -49,8 +49,8 @@ namespace ArcadeFighter
 
         private void Start()
         {
-	        LeftPlayer .Initialized();
-	        RightPlayer.Initialized();
+	        LeftPlayer .Initialized(this);
+	        RightPlayer.Initialized(this);
 	        
 	        LeftPlayer .GetOtherPlayer();
 	        RightPlayer.GetOtherPlayer();
@@ -60,6 +60,9 @@ namespace ArcadeFighter
 	       
 	        InputManager.GetControl(LeftPlayer , LeftPlayer .Type);
 	        InputManager.GetControl(RightPlayer, RightPlayer.Type);
+	        
+	        CameraManager.GetPlayersRef();
+	        UIManager    .GetPlayersRef();
         }
 
         private void Update()
@@ -67,6 +70,7 @@ namespace ArcadeFighter
 	        GameTime.Update();
 	        
 	        InputManager       .Update();
+	        CameraManager      .Update();
 	        StateMachineManager.Update();
 	        
 	        foreach (var _character in Character.AllCharacters)
@@ -76,7 +80,11 @@ namespace ArcadeFighter
         public void Reset()
         {
 	        foreach (var _character in Character.AllCharacters)
+	        {
+		        _character.ResetHealth();
+		        _character.ResetAnimation();
 		        _character.ResetPosition();
+	        }
         }
 
         private void OnDestroy()

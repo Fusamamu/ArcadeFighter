@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace ArcadeFighter
@@ -15,6 +14,7 @@ namespace ArcadeFighter
          
         [field: SerializeField] public float Health      { get; private set; } = 100f;
         [field: SerializeField] public float AttackRange { get; private set; } = 2;
+        [field: SerializeField] public float AttackPower { get; private set; } = 12f;
         [field: SerializeField] public float MoveSpeed   { get; private set; } = 1f;
 
         public float RightSide => TargetTransform.position.x + TargetCollider.bounds.extents.x;
@@ -27,21 +27,39 @@ namespace ArcadeFighter
         public StageData StageData;
         
         protected Character otherPlayer;
-        
+
         public static Character[] AllCharacters = new Character[2];
+        public static Character PlayerOne => AllCharacters[0];
+        public static Character PlayerTwo => AllCharacters[1];
 
         public bool IsActionProcess => processActionCoroutine != null;
         protected Coroutine processActionCoroutine;
 
         [SerializeField] private Vector3 originStandPosition;
+
+        public UnityEvent<float> OnGetHitEvent;
+
+        private ApplicationStarter application;
         
+        protected static readonly int walkForwardProperty      = Animator.StringToHash("Walk Forward");
+        protected static readonly int walkBackwardProperty     = Animator.StringToHash("Walk Backward");
+        protected static readonly int punchTriggerProperty     = Animator.StringToHash("PunchTrigger");
+        protected static readonly int guardProperty            = Animator.StringToHash("Guard");
+        protected static readonly int jumpTriggerProperty      = Animator.StringToHash("JumpTrigger");
+        protected static readonly int evadeTriggerProperty     = Animator.StringToHash("EvadeTrigger");
+        protected static readonly int getPunchTriggerProperty  = Animator.StringToHash("GetPunchTrigger");
+        protected static readonly int getKoTriggerProperty     = Animator.StringToHash("GetKOTrigger");
+        protected static readonly int resetIdleTriggerProperty = Animator.StringToHash("ResetIdle");
+
         public Character()
         {
             
         }
         
-        public virtual void Initialized()
+        public virtual void Initialized(ApplicationStarter _application)
         {
+            application = _application;
+            
             switch (Type)
             {
                 case PlayerType.PLAYER_ONE:
@@ -64,14 +82,17 @@ namespace ArcadeFighter
         {
         }
 
-        public void ResetPosition()
-        {
-            TargetTransform.position = originStandPosition;
-        }
+        public void ResetHealth   () => Health = 100f;
+        public void ResetAnimation() => TargetAnimator.SetTrigger(resetIdleTriggerProperty);
+        public void ResetPosition () => TargetTransform.position = originStandPosition;
 
         public void ReduceHealth(float _value)
         {
             Health -= _value;
+            if (Health <= 0f)
+                Health = 0;
+            
+            OnGetHitEvent?.Invoke(Health / 100f);
         }
         
         public virtual void MoveLeft(float _moveAmount)
@@ -79,14 +100,6 @@ namespace ArcadeFighter
         }
         
         public virtual void MoveRight(float _moveAmount)
-        {
-        }
-
-        public virtual void MoveLeft(InputAction.CallbackContext? _context = null)
-        {
-        }
-
-        public virtual void MoveRight(InputAction.CallbackContext? _context = null)
         {
         }
 
@@ -114,6 +127,8 @@ namespace ArcadeFighter
         {
             AllCharacters[0] = null;
             AllCharacters[1] = null;
+            
+            OnGetHitEvent.RemoveAllListeners();
         }
     }
 }

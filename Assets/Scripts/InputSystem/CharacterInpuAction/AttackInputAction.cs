@@ -12,34 +12,21 @@ namespace ArcadeFighter
 			InputManager _inputManager
 		) : base(_character, _inputAction, _inputManager)
 		{
+			InputType = InputType.CLICK;
 		}
 		
 		public override void RunPressedActionCommand()
 		{
 			TargetCharacter.Attack();
 		}
-		
-		public override void RunReleasedActionCommand()
-		{
-		}
         
 		protected override void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
-			if(!CanPress())
+			if(PlayerHeldPress)
 				return;
 			
 			base.OnPressedInputHandler(_context);
-			IsTriggerred = true;
 			TargetCharacter.Attack(_context);
-		}
-        
-		protected override void OnReleasedInputHandler(InputAction.CallbackContext _context)
-		{
-			if(!CanPress())
-				return;
-			
-			base.OnReleasedInputHandler(_context);
-			IsTriggerred = false;
 		}
 	}
 }

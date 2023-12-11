@@ -4,8 +4,16 @@ using UnityEngine.InputSystem;
 
 namespace ArcadeFighter
 {
+	public enum InputType
+	{
+		PRESSHOLD, 
+		CLICK
+	}
+	
 	public class CharacterInputAction : IDisposable
 	{
+		public InputType InputType;
+		
 		public bool IsPressed    { get; protected set; }
 		public bool IsTriggerred { get; protected set; }
         
@@ -14,6 +22,9 @@ namespace ArcadeFighter
 		public readonly InputManager InputManager;
 
 		public readonly string InputActionName;
+
+		public static CharacterInputAction CurrentInputAction;
+		public static bool PlayerHeldPress;
 
 		public CharacterInputAction(Character _character, InputAction _inputAction, InputManager _inputManager)
 		{
@@ -45,14 +56,28 @@ namespace ArcadeFighter
         
 		protected virtual void OnPressedInputHandler(InputAction.CallbackContext _context)
 		{
+			if (!PlayerHeldPress)
+			{
+				PlayerHeldPress    = true;
+				CurrentInputAction = this;
+			}
+			
 			IsPressed = true;
 			InputManager.InputRecorder.RecordInput(this);
 		}
         
 		protected virtual void OnReleasedInputHandler(InputAction.CallbackContext _context)
 		{
-			IsPressed = false;
-			InputManager.InputRecorder.RecordInput(this);
+			if (PlayerHeldPress && CurrentInputAction == this)
+				PlayerHeldPress = false;
+
+			if (IsPressed)
+			{
+				IsPressed = false;
+				
+				if(InputType != InputType.CLICK)
+					InputManager.InputRecorder.RecordInput(this);
+			}
 		}
 
 		protected virtual bool CanPress()

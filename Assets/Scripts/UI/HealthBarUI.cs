@@ -10,6 +10,14 @@ namespace ArcadeFighter
     {
         public RectTransform BarRectTransform;
 
+        public void SetHealthBar(float _percent)
+        {
+            if (_percent < 0)
+                _percent = 0;
+            
+            BarRectTransform.localScale = new Vector3(_percent, 1, 1);
+        }
+
         public Coroutine StartAnimateHealthBarToMax()
         {
             return application.StartCoroutine(AnimateHealthBarToMaxCoroutine());

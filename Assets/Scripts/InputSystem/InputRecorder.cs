@@ -8,14 +8,12 @@ namespace ArcadeFighter
     [Serializable]
     public class InputRecorder
     {
-        private List<InputRecordData> AllRecordedInputs = new ();
+        public List<InputRecordData> AllRecordedInputs = new ();
 
         [SerializeField] private int currentRecordIndex;
         [SerializeField] private InputRecordData currentInputRecordData;
 
         private bool isUpdateReplay;
-
-        private bool hasAlreadyTriggerred;
         
         public void RecordInput(CharacterInputAction _characterInputAction)
         {
@@ -55,46 +53,49 @@ namespace ArcadeFighter
 
         public void UpdateReplay()
         {
-            if(!isUpdateReplay)
+            if(!isUpdateReplay || currentInputRecordData == null)
                 return;
             
             var _elapsedTime = ApplicationStarter.GameTime.ElapsedTime;
-            
             if (_elapsedTime <= AllRecordedInputs.First().TimeStamp)
-                return;
-            
-            if (currentInputRecordData == null)
                 return;
 
             if (!TryGetNextRecordData(currentRecordIndex, out var _nextRecordData))
             {
-                if(!currentInputRecordData.IsPressed)
-                    currentInputRecordData.CharacterInputAction.RunReleasedActionCommand();
+                if(currentInputRecordData.InputType == InputType.PRESSHOLD)
+                    if (!currentInputRecordData.IsPressed)
+                        currentInputRecordData.CharacterInputAction.RunReleasedActionCommand();
+                
+                if(currentInputRecordData.InputType == InputType.CLICK)
+                    if (!currentInputRecordData.HasTriggered)
+                        currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
+                
                 StopReplay();
                 return;
             }
-
+            
             if (_elapsedTime < _nextRecordData.TimeStamp)
             {
-                if (!currentInputRecordData.IsTriggerred)
+                switch(currentInputRecordData.InputType)
                 {
-                    if (currentInputRecordData.IsPressed)
-                        currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
-                    else
-                        currentInputRecordData.CharacterInputAction.RunReleasedActionCommand();
-                }
-                else
-                {
-                    hasAlreadyTriggerred = true;
-                    if(hasAlreadyTriggerred)
-                        return;
-                    
-                    currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
+                    case InputType.PRESSHOLD:
+                        if (currentInputRecordData.IsPressed)
+                            currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
+                        else
+                            currentInputRecordData.CharacterInputAction.RunReleasedActionCommand();
+                        break;
+                    case InputType.CLICK:
+                        if (!currentInputRecordData.HasTriggered)
+                        {
+                            currentInputRecordData.CharacterInputAction.RunPressedActionCommand();
+                            currentInputRecordData.HasTriggered = true;
+                        }
+                        break;
                 }
             }
             else
             {
-                hasAlreadyTriggerred = false;
+                currentInputRecordData.HasTriggered = false;
                 currentInputRecordData = _nextRecordData;
                 currentRecordIndex++;
             }
