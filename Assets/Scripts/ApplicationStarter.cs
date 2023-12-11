@@ -1,17 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ArcadeFighter
 {
-	[Serializable]
-	public class StageData
-	{
-		public Transform LeftWall;
-		public Transform RightWall;
-	}
-	
 	public class ApplicationStarter : MonoBehaviour
     {
 	    public int StartTimer = 60;
@@ -60,6 +50,7 @@ namespace ArcadeFighter
 	        UIManager    .GetPlayersRef();
 	        
 	        AudioManager.PlayBGM();
+	        GameStageData.AnimateStageColor(this);
 
 	        StateMachineManager.ChangeState<MainMenuState>();
         }
